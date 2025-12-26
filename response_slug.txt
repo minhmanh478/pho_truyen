@@ -1,0 +1,24 @@
+HTTP/2 404 
+date: Wed, 24 Dec 2025 08:03:09 GMT
+content-type: text/html; charset=utf-8
+server: cloudflare
+x-powered-by: Express
+access-control-allow-origin: *
+content-security-policy: default-src 'none'
+x-content-type-options: nosniff
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=WtDu3sbsssjdP0JGkIvVONnsrNtDWU7DjpGn7Y7Iv6jg3PuAvHdpxk2T%2BTKGRyIxJ6B1r%2BuWEiFhhwz6Fa%2BwLPFL2kW8yj4jcdFRDbJRASyiQRaFOihaL9cANp90yQ%3D%3D"}]}
+cf-cache-status: DYNAMIC
+cf-ray: 9b2e94a0e8915d17-SIN
+alt-svc: h3=":443"; ma=86400
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>NotFoundError: Not Found<br> &nbsp; &nbsp;at /var/www/photruyen_api_dev/app.js:81:7<br> &nbsp; &nbsp;at newFn (/var/www/photruyen_api_dev/node_modules/express-async-errors/index.js:16:20)<br> &nbsp; &nbsp;at Layer.handle [as handle_request] (/var/www/photruyen_api_dev/node_modules/express/lib/router/layer.js:95:5)<br> &nbsp; &nbsp;at trim_prefix (/var/www/photruyen_api_dev/node_modules/express/lib/router/index.js:317:13)<br> &nbsp; &nbsp;at /var/www/photruyen_api_dev/node_modules/express/lib/router/index.js:284:7<br> &nbsp; &nbsp;at Function.process_params (/var/www/photruyen_api_dev/node_modules/express/lib/router/index.js:335:12)<br> &nbsp; &nbsp;at next (/var/www/photruyen_api_dev/node_modules/express/lib/router/index.js:275:10)<br> &nbsp; &nbsp;at /var/www/photruyen_api_dev/node_modules/express/lib/router/index.js:635:15<br> &nbsp; &nbsp;at next (/var/www/photruyen_api_dev/node_modules/express/lib/router/index.js:260:14)<br> &nbsp; &nbsp;at Function.handle (/var/www/photruyen_api_dev/node_modules/express/lib/router/index.js:174:3)</pre>
+</body>
+</html>

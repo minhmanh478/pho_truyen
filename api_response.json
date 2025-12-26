@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>TypeError: (intermediate value) is not iterable<br> &nbsp; &nbsp;at exports.getAllStory (/var/www/photruyen_api_dev/src/story/story.filter.controller.js:31:28)<br> &nbsp; &nbsp;at runMicrotasks (&lt;anonymous&gt;)<br> &nbsp; &nbsp;at processTicksAndRejections (node:internal/process/task_queues:96:5)</pre>
+</body>
+</html>
