@@ -38,5 +38,5 @@ lib/
 ├── core/               # Các hằng số, theme, utils và lỗi hệ thống
 ├── data/               # Triển khai Repository, Data Sources (Local/Remote) và Models (DTO)
 ├── domain/             # Chứa Entities, Business Logic (Use Cases) và Interfaces
-├── presentation/       # Giao diện người dùng (Screens, Widgets) và BLoC/Providers
+├── presentation/       # Giao diện người dùng (Screens, Widgets) và GetX
 └── main.dart           # File khởi chạy ứng dụng
