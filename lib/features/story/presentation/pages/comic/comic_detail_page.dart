@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/gestures.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
 import 'package:pho_truyen/core/constants/app_style.dart';
-import 'package:pho_truyen/features/comment/presentation/widgets/comment_section.dart';
+import 'package:pho_truyen/core/widgets/comment_profile.dart';
 import 'package:pho_truyen/shared/widgets/button/auth_widget.dart';
 import 'package:pho_truyen/shared/widgets/button/dialog_login.dart';
 import 'package:pho_truyen/shared/widgets/item_hashtags.dart';
@@ -383,6 +383,17 @@ class ComicDetailPage extends StatelessWidget {
   }
 
   Widget _buildInfoTab(BuildContext context, ComicDetailModel comicDetail) {
+    // Mock comments for now as they were in controller
+    final comments = [
+      {
+        'name': 'Lê Minh Mạnh',
+        'avatarUrl':
+            'https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/491924549_1183614206476982_1175671270079321138_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=PqZ3-Hbi6f4Q7kNvwEcXBJ3&_nc_oc=AdlDBkKRsh5eO1xo9M3dw2vz_VIbJ3jUfx18QYZp85kiSUhj0uLFR00AIfsgtqv2J9M&_nc_zt=23&_nc_ht=scontent.fhan14-3.fna&_nc_gid=A6HF_gWfVIskUj141CDY5w&oh=00_AfnsAJBraAsTfB-S1435nDlVPaIUcqcABcysn5Frz6fF7g&oe=6946FB04',
+        'comment': '(Tính năng đang phát triển)',
+        'date': '7 tháng trước',
+      },
+    ];
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -449,8 +460,31 @@ class ComicDetailPage extends StatelessWidget {
           const SizedBox(height: 8),
           _ExpandableText(text: comicDetail.content ?? ''),
 
+          const Divider(height: 20, thickness: 1, color: Colors.white10),
+          Row(children: [const Text('Bình luận', style: AppStyle.s14w600)]),
+          const SizedBox(height: 16),
+
           //Hiển thị Comment
-          CommentSection(comicId: comicDetail.id),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: comments.map((e) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: SizedBox(
+                    width: 320,
+                    child: CommentProfile(
+                      name: e['name'] ?? 'Ẩn danh',
+                      avatarUrl: e['avatarUrl'] ?? '',
+                      comment: e['comment'] ?? '',
+                      date: e['date'] ?? '',
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
           const SizedBox(height: 10),
         ],
       ),

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pho_truyen/core/constants/app_paths.dart';
 import 'package:pho_truyen/core/utils/app_actions.dart';
-import 'package:pho_truyen/core/router/app_routes.dart';
+import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/account/info_author_page.dart';
+import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/account/info_user_page.dart';
+import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/ruby/loaded_ruby_page.dart';
+import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/ruby/transaction_history.dart';
+import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/ruby/vip_registration_page.dart';
 import 'package:pho_truyen/features/users/presentation/widgets/info_user/info_user_avatar.dart';
 import '../../../../core/constants/app_color.dart';
 import '../../../../shared/widgets/button/section_header.dart';
@@ -180,7 +184,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
                     onTap: () async {
-                      final result = await Get.toNamed(AppRoutes.infoUser);
+                      final result = await Get.to(() => const InfoUserPage());
                       if (result == true) {
                         Get.snackbar(
                           "Thành công",
@@ -201,7 +205,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
                     onTap: () async {
-                      await Get.toNamed(AppRoutes.infoAuthor);
+                      await Get.to(() => const InfoAuthorPage());
                       _refreshProfile();
                     },
                     isDarkMode: isDarkMode,
@@ -243,7 +247,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
                     onTap: () {
-                      Get.toNamed(AppRoutes.vipRegistration);
+                      Get.to(() => const VipRegistrationPage());
                     },
                     isDarkMode: isDarkMode,
                   ),
@@ -254,7 +258,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
                     onTap: () {
-                      Get.toNamed(AppRoutes.loadedRuby);
+                      Get.to(() => const LoadedRubyPage());
                     },
                     isDarkMode: isDarkMode,
                   ),
@@ -265,7 +269,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
                     onTap: () {
-                      Get.toNamed(AppRoutes.transactionHistory);
+                      Get.to(() => const TransactionHistoryPage());
                     },
                     isDarkMode: isDarkMode,
                   ),
