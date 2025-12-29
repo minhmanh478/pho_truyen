@@ -11,7 +11,7 @@ import 'package:pho_truyen/features/home/presentation/widgets/ranking_item.dart'
 import 'package:pho_truyen/features/dashboard/presentation/controllers/main_app_controller.dart';
 import 'package:pho_truyen/features/home/data/models/home_model.dart';
 import 'package:pho_truyen/features/home/presentation/controllers/home_controller.dart';
-import 'package:pho_truyen/features/home/presentation/pages/notification_page.dart';
+import 'package:pho_truyen/core/router/app_routes.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       final mainController = Get.find<MainAppController>();
                       if (mainController.isLoggedIn.value) {
-                        Get.to(() => const NotificationPage());
+                        Get.toNamed(AppRoutes.notification);
                       } else {
                         Get.dialog(const DialogLogin());
                       }

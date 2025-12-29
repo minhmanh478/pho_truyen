@@ -1,4 +1,3 @@
 export 'app_color.dart';
 export 'app_style.dart';
 export 'app_paths.dart';
-export 'app_routes.dart';

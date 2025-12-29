@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:pho_truyen/features/story/presentation/pages/library/fillter_hastags_page.dart';
+import 'package:pho_truyen/core/router/app_routes.dart';
 import 'package:pho_truyen/features/story/presentation/pages/library/fillter_time_page.dart';
 
 class LibraryHeader extends StatelessWidget {
@@ -61,7 +61,7 @@ class LibraryHeader extends StatelessWidget {
           bgColor: elementBgColor,
           borderColor: borderColor,
           iconColor: iconColor,
-          onTap: onFilterTap ?? () => Get.to(() => FillterHastagsPage()),
+          onTap: onFilterTap ?? () => Get.toNamed(AppRoutes.filterHashtags),
         ),
 
         const SizedBox(width: 12),

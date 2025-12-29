@@ -54,7 +54,7 @@ class MainAppController extends GetxController {
             },
           );
         } else {
-          // Fallback if UseCase not found (shouldn't happen if binding is correct)
+          // Dự phòng nếu không tìm thấy UseCase (sẽ không xảy ra nếu liên kết là chính xác)
           final token = await TokenService().getToken();
           isLoggedIn.value = token != null && token.isNotEmpty;
         }
@@ -74,15 +74,15 @@ class MainAppController extends GetxController {
   Future<void> logout() async {
     await TokenService().removeToken();
     isLoggedIn.value = false;
-    index.value = 3; // Keep at Account tab (which will show Guest view)
+    index.value = 3;
 
-    // Clear UserController state if it exists
+    // Xóa trạng thái UserController nếu nó tồn tại
     if (Get.isRegistered<UserController>()) {
       final userController = Get.find<UserController>();
       userController.userProfile.value = null;
     }
 
-    // Navigate to Main App (Account Tab)
+    // Điều hướng đến ứng dụng chính (tab tài khoản)
     Get.offAllNamed(AppRoutes.mainApp);
   }
 }

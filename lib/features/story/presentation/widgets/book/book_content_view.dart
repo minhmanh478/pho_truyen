@@ -3,7 +3,8 @@ import 'package:pho_truyen/core/constants/app_color.dart';
 import 'package:get/get.dart';
 import 'package:pho_truyen/features/story/presentation/widgets/book/book_grid_item.dart';
 import 'package:pho_truyen/features/story/presentation/widgets/book/book_list_item.dart';
-import 'package:pho_truyen/features/story/presentation/pages/comic/comic_detail_page.dart';
+
+import 'package:pho_truyen/core/router/app_routes.dart';
 
 class BookContentView extends StatelessWidget {
   final List data;
@@ -38,7 +39,8 @@ class BookContentView extends StatelessWidget {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => Get.to(() => const ComicDetailPage()),
+            onTap: () =>
+                Get.toNamed(AppRoutes.comicDetail, arguments: data[index].id),
             child: BookGridItem(item: data[index]),
           );
         },
@@ -51,7 +53,8 @@ class BookContentView extends StatelessWidget {
       separatorBuilder: (context, index) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => Get.to(() => const ComicDetailPage()),
+          onTap: () =>
+              Get.toNamed(AppRoutes.comicDetail, arguments: data[index].id),
           child: BookListItem(item: data[index]),
         );
       },
