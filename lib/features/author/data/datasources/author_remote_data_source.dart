@@ -9,6 +9,7 @@ import 'package:pho_truyen/features/author/data/models/author_model.dart';
 abstract class AuthorRemoteDataSource {
   Future<AuthorDetailResponse> getAuthorDetail(int id);
   Future<List<dynamic>> getStoriesByAuthor(int userId, int offset, int limit);
+  Future<bool> followAuthor(int id, int state);
 }
 
 class AuthorRemoteDataSourceImpl implements AuthorRemoteDataSource {
@@ -75,6 +76,27 @@ class AuthorRemoteDataSourceImpl implements AuthorRemoteDataSource {
     } catch (e) {
       throw DioException(
         requestOptions: RequestOptions(path: '/api/story/story-in-user'),
+        error: "Lỗi không xác định: $e",
+      );
+    }
+  }
+
+  @override
+  Future<bool> followAuthor(int id, int state) async {
+    try {
+      final response = await dioClient.dio.post(
+        '/api/author/follow',
+        data: {'id': id, 'state': state},
+      );
+      if (response.statusCode == 200 && response.data['code'] == 'success') {
+        return true;
+      }
+      return false;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e) {
+      throw DioException(
+        requestOptions: RequestOptions(path: '/api/author/follow'),
         error: "Lỗi không xác định: $e",
       );
     }

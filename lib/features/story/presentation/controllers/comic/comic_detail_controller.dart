@@ -7,6 +7,9 @@ import 'package:pho_truyen/features/story/domain/usecases/get_comic_detail_useca
 import 'package:pho_truyen/features/chapter/data/datasources/chapter_remote_data_source.dart';
 import 'package:pho_truyen/features/chapter/data/repositories/chapter_repository_impl.dart';
 import 'package:pho_truyen/features/chapter/domain/usecases/get_chapters_usecase.dart';
+import 'package:pho_truyen/features/users/domain/usecases/donate_to_author_usecase.dart';
+import 'package:pho_truyen/features/users/data/repositories/user_repository_impl.dart';
+import 'package:pho_truyen/features/users/data/datasources/user_remote_datasource.dart';
 
 import 'package:pho_truyen/features/story/domain/usecases/toggle_favorite_story_usecase.dart';
 import 'package:pho_truyen/features/story/presentation/controllers/bookcase/bookcase_controller.dart';
@@ -28,6 +31,12 @@ class ComicDetailController extends GetxController {
           remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
         ),
       );
+
+  final DonateToAuthorUseCase _donateToAuthorUseCase = DonateToAuthorUseCase(
+    UserRepositoryImpl(
+      remoteDataSource: UserRemoteDataSourceImpl(dioClient: Get.find()),
+    ),
+  );
 
   late Future<ComicDetailModel?> comicDetailFuture;
   final RxList<ChapterModel> chapters = <ChapterModel>[].obs;
@@ -156,5 +165,28 @@ class ComicDetailController extends GetxController {
 
   void markChapterAsRead(int id) {
     readChapterIds.add(id);
+  }
+
+  Future<void> donate(int authorId, int amount) async {
+    try {
+      final result = await _donateToAuthorUseCase(
+        authorId: authorId,
+        amount: amount,
+      );
+      result.fold(
+        (failure) {
+          Get.snackbar('Lỗi', 'Tặng quà thất bại: ${failure.message}');
+        },
+        (success) {
+          if (success) {
+            Get.snackbar('Thành công', 'Tặng quà thành công');
+          } else {
+            Get.snackbar('Lỗi', 'Tặng quà thất bại');
+          }
+        },
+      );
+    } catch (e) {
+      Get.snackbar('Lỗi', 'Có lỗi xảy ra: $e');
+    }
   }
 }

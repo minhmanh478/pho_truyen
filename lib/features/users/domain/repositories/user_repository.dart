@@ -28,4 +28,8 @@ abstract class UserRepository {
   );
   Future<Either<Failure, UserExtendInfoModel>> getUserExtendInfo();
   Future<Either<Failure, bool>> buyVip(int timeId);
+  Future<Either<Failure, bool>> donateToAuthor({
+    required int authorId,
+    required int amount,
+  });
 }

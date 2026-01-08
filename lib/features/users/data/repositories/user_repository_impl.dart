@@ -132,4 +132,22 @@ class UserRepositoryImpl implements UserRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> donateToAuthor({
+    required int authorId,
+    required int amount,
+  }) async {
+    try {
+      final result = await remoteDataSource.donateToAuthor(
+        authorId: authorId,
+        amount: amount,
+      );
+      return Right(result);
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? 'Unknown error'));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
 import 'package:pho_truyen/features/author/presentation/controllers/author_detail_controller.dart';
+import 'package:pho_truyen/features/author/presentation/widgets/donate_dialog.dart';
 import 'package:pho_truyen/shared/widgets/item_hashtags.dart';
 
 class AuthorDetailPage extends GetView<AuthorDetailController> {
@@ -98,16 +99,30 @@ class AuthorDetailPage extends GetView<AuthorDetailController> {
                       style: TextStyle(fontSize: 14, color: secondaryTextColor),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      '${author.followCount} người theo dõi',
-                      style: TextStyle(fontSize: 14, color: secondaryTextColor),
+                    Obx(
+                      () => Text(
+                        '${controller.followCount.value} người theo dõi',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: secondaryTextColor,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => DonateDialog(
+                                onDonate: (amount) {
+                                  controller.donate(amount);
+                                },
+                              ),
+                            );
+                          },
                           icon: const Icon(Icons.card_giftcard, size: 18),
                           label: const Text('Tặng Quà'),
                           style: ElevatedButton.styleFrom(
@@ -119,15 +134,28 @@ class AuthorDetailPage extends GetView<AuthorDetailController> {
                           ),
                         ),
                         const SizedBox(width: 16),
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.add, size: 18),
-                          label: const Text('Theo dõi'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        Obx(
+                          () => ElevatedButton.icon(
+                            onPressed: controller.toggleFollow,
+                            icon: Icon(
+                              controller.isFollow.value
+                                  ? Icons.check
+                                  : Icons.add,
+                              size: 18,
+                            ),
+                            label: Text(
+                              controller.isFollow.value
+                                  ? 'Đang theo dõi'
+                                  : 'Theo dõi',
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: controller.isFollow.value
+                                  ? Colors.grey
+                                  : Colors.blue,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
                           ),
                         ),

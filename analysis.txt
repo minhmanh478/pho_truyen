@@ -1,0 +1,91 @@
+Analyzing pho_truyen...                                         
+
+   info • The type parameter name 'Type' matches a visible type name • lib/core/usecase/usecase.dart:4:24 • avoid_types_as_parameter_names
+   info • Parameters ''accessToken' and 'refreshToken'' could be super parameters • lib/features/auth/data/models/responses/token_model.dart:4:3 • use_super_parameters
+   info • Unnecessary override • lib/features/auth/presentation/controllers/verify_code_controller.dart:34:8 • unnecessary_overrides
+   info • Don't invoke 'print' in production code • lib/features/author/presentation/pages/author_detail_page.dart:61:27 • avoid_print
+   info • The imported package 'collection' isn't a dependency of the importing package • lib/features/authorstories/presentation/controllers/edit_story_controller.dart:3:8 • depend_on_referenced_packages
+   info • Don't invoke 'print' in production code • lib/features/authorstories/presentation/controllers/edit_story_controller.dart:127:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/authorstories/presentation/controllers/edit_story_controller.dart:155:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/authorstories/presentation/controllers/post_new_story_controller.dart:83:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/authorstories/presentation/controllers/post_new_story_controller.dart:111:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/authorstories/presentation/controllers/your_story_detail_controller.dart:97:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/authorstories/presentation/pages/your_stories/your_stories_page.dart:71:23 • avoid_print
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/authorstories/presentation/pages/your_stories/your_stories_page.dart:89:35 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/authorstories/presentation/pages/your_story_detail/widgets/story_detail_bottom_actions.dart:29:33 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/authorstories/presentation/pages/your_story_detail/your_story_detail_widgets.dart:136:33 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/authorstories/presentation/widgets/your_story_item.dart:29:35 • deprecated_member_use
+   info • Don't invoke 'print' in production code • lib/features/chapter/presentation/controllers/chapter_controller.dart:218:7 • avoid_print
+   info • The import of 'package:flutter/rendering.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' • lib/features/chapter/presentation/pages/chapter_page.dart:5:8 • unnecessary_import
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/chapter/presentation/pages/chapter_page.dart:165:59 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/chapter/presentation/pages/chapter_page.dart:225:59 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/chapter/presentation/pages/chapter_page.dart:243:60 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/chapter/presentation/pages/chapter_page.dart:270:60 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/chapter/presentation/pages/chapter_page.dart:293:53 • deprecated_member_use
+   info • 'activeColor' is deprecated and shouldn't be used. Use activeThumbColor instead. This feature was deprecated after v3.31.0-2.0.pre • lib/features/chapter/presentation/widgets/chapter_settings_bottom_sheet.dart:199:19 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/chapter/presentation/widgets/chapter_settings_bottom_sheet.dart:200:59 • deprecated_member_use
+   info • Don't invoke 'print' in production code • lib/features/chapter/presentation/widgets/chapter_settings_bottom_sheet.dart:270:11 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/chapter/presentation/widgets/chapter_settings_bottom_sheet.dart:278:11 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/chapter/presentation/widgets/chapter_settings_bottom_sheet.dart:317:11 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/comment/presentation/controllers/comment_controller.dart:114:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/comment/presentation/pages/comment_list_page.dart:121:17 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/common/data/repositories/common_repository_impl.dart:37:9 • avoid_print
+   info • The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' • lib/features/dashboard/presentation/pages/main_app_page.dart:1:8 • unnecessary_import
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/dashboard/presentation/pages/main_app_page.dart:45:37 • deprecated_member_use
+   info • Don't invoke 'print' in production code • lib/features/home/presentation/controllers/home_controller.dart:20:7 • avoid_print
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/home/presentation/widgets/featured_carousel.dart:87:38 • deprecated_member_use
+   info • Don't invoke 'print' in production code • lib/features/notification/presentation/controllers/notification_controller.dart:50:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/notification/presentation/controllers/notification_controller.dart:66:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/notification/presentation/controllers/notification_controller.dart:92:7 • avoid_print
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/notification/presentation/pages/notification_detail_page.dart:68:31 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/notification/presentation/pages/notification_detail_page.dart:69:31 • deprecated_member_use
+warning • The '!' will have no effect because the receiver can't be null • lib/features/notification/presentation/widgets/notification_item.dart:45:60 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null • lib/features/notification/presentation/widgets/notification_item.dart:57:56 • unnecessary_non_null_assertion
+   info • Don't invoke 'print' in production code • lib/features/search/presentation/controllers/search_controller.dart:18:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/data/datasources/comic_remote_data_source.dart:78:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/data/datasources/comic_remote_data_source.dart:201:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:55:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:62:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:71:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:73:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:76:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:88:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:92:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:95:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:107:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:111:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/bookcase/bookcase_controller.dart:114:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:49:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:57:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:89:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:96:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:98:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:122:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:124:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:129:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/comic/comic_detail_controller.dart:151:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/library_controller.dart:67:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/library_controller.dart:102:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/controllers/library_controller.dart:131:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/pages/comic/comic_detail_page.dart:244:21 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/pages/comic/comic_detail_page.dart:255:23 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/pages/comic/comic_detail_page.dart:301:17 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/story/presentation/pages/comic/comic_detail_page.dart:426:15 • avoid_print
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/story/presentation/widgets/bookcase/bookcase_header.dart:56:43 • deprecated_member_use
+   info • Don't invoke 'print' in production code • lib/features/users/data/datasources/user_remote_datasource.dart:107:7 • avoid_print
+   info • Parameters ''timeStart', 'timeEnd', 'priority', 'vipId', 'name', and 'rules'' could be super parameters • lib/features/users/data/models/user_vip_model.dart:4:3 • use_super_parameters
+   info • Parameters ''userId', 'totalBalance', 'freezeBalance', 'availableBalance', 'walletType', and 'name'' could be super parameters • lib/features/users/data/models/wallet_model.dart:4:3 • use_super_parameters
+   info • Use 'TypeName _' instead of a type literal • lib/features/users/presentation/controllers/account/info_author_controller.dart:77:12 • type_literal_in_constant_pattern
+   info • Use 'TypeName _' instead of a type literal • lib/features/users/presentation/controllers/account/info_author_controller.dart:79:12 • type_literal_in_constant_pattern
+   info • Don't invoke 'print' in production code • lib/features/users/presentation/controllers/loaded_ruby_controller.dart:31:7 • avoid_print
+   info • Use 'TypeName _' instead of a type literal • lib/features/users/presentation/controllers/transaction_history_controller.dart:57:12 • type_literal_in_constant_pattern
+   info • Use 'TypeName _' instead of a type literal • lib/features/users/presentation/controllers/transaction_history_controller.dart:59:12 • type_literal_in_constant_pattern
+   info • Use 'TypeName _' instead of a type literal • lib/features/users/presentation/controllers/vip_registration_controller.dart:45:12 • type_literal_in_constant_pattern
+   info • Use 'TypeName _' instead of a type literal • lib/features/users/presentation/controllers/vip_registration_controller.dart:47:12 • type_literal_in_constant_pattern
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/users/presentation/pages/subfolder_page/account/info_author_page.dart:192:35 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/users/presentation/pages/subfolder_page/ruby/payment_page.dart:152:45 • deprecated_member_use
+   info • 'groupValue' is deprecated and shouldn't be used. Use a RadioGroup ancestor to manage group value instead. This feature was deprecated after v3.32.0-0.0.pre • lib/features/users/presentation/widgets/info_user/info_user_form.dart:157:11 • deprecated_member_use
+   info • 'onChanged' is deprecated and shouldn't be used. Use RadioGroup to handle value change instead. This feature was deprecated after v3.32.0-0.0.pre • lib/features/users/presentation/widgets/info_user/info_user_form.dart:159:11 • deprecated_member_use
+   info • Empty catch block • lib/shared/widgets/item_hashtags.dart:23:21 • empty_catches
+
+87 issues found. (ran in 6.9s)

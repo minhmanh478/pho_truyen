@@ -3,6 +3,9 @@ import 'package:pho_truyen/features/author/data/datasources/author_remote_data_s
 import 'package:pho_truyen/features/author/data/repositories/author_repository_impl.dart';
 import 'package:pho_truyen/features/author/domain/usecases/get_author_detail_usecase.dart';
 import 'package:pho_truyen/features/author/domain/usecases/get_stories_by_author_usecase.dart';
+import 'package:pho_truyen/features/author/domain/usecases/follow_author_usecase.dart';
+import 'package:pho_truyen/features/users/domain/usecases/donate_to_author_usecase.dart';
+import 'package:pho_truyen/features/users/domain/repositories/user_repository.dart';
 import 'package:pho_truyen/features/author/presentation/controllers/author_detail_controller.dart';
 
 class AuthorDetailBinding extends Bindings {
@@ -14,10 +17,14 @@ class AuthorDetailBinding extends Bindings {
     Get.lazyPut(
       () => GetStoriesByAuthorUseCase(Get.find<AuthorRepositoryImpl>()),
     );
+    Get.lazyPut(() => FollowAuthorUseCase(Get.find<AuthorRepositoryImpl>()));
+    Get.lazyPut(() => DonateToAuthorUseCase(Get.find<UserRepository>()));
     Get.lazyPut(
       () => AuthorDetailController(
         getAuthorDetailUseCase: Get.find(),
         getStoriesByAuthorUseCase: Get.find(),
+        followAuthorUseCase: Get.find(),
+        donateToAuthorUseCase: Get.find(),
       ),
     );
   }

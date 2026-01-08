@@ -31,4 +31,9 @@ class AuthorRepositoryImpl implements AuthorRepository {
     );
     return response.map((e) => StoryModel.fromJson(e)).toList();
   }
+
+  @override
+  Future<bool> followAuthor(int id, int state) async {
+    return await remoteDataSource.followAuthor(id, state);
+  }
 }

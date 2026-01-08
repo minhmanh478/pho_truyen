@@ -9,4 +9,5 @@ abstract class AuthorRepository {
     int offset,
     int limit,
   );
+  Future<bool> followAuthor(int id, int state);
 }

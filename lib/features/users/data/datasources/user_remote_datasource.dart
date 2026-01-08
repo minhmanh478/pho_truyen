@@ -28,6 +28,7 @@ abstract class UserRemoteDataSource {
 
   Future<UserExtendInfoModel> getUserExtendInfo();
   Future<bool> buyVip(int timeId);
+  Future<bool> donateToAuthor({required int authorId, required int amount});
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -221,6 +222,38 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       final response = await dioClient.dio.post(
         '/api/vip/buy',
         data: {'time_id': timeId},
+      );
+
+      final baseResponse = BaseResponse<dynamic>.fromJson(
+        response.data,
+        (json) => json,
+      );
+
+      if (baseResponse.code != 'success' &&
+          baseResponse.code != 'SUCCESS' &&
+          baseResponse.code != '200') {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          error: baseResponse.message,
+          type: DioExceptionType.badResponse,
+        );
+      }
+
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> donateToAuthor({
+    required int authorId,
+    required int amount,
+  }) async {
+    try {
+      final response = await dioClient.dio.post(
+        '/api/wallet/donate-author',
+        data: {'author_id': authorId, 'amount': amount},
       );
 
       final baseResponse = BaseResponse<dynamic>.fromJson(

@@ -151,9 +151,15 @@ class YourStoryDetailController extends GetxController
     );
   }
 
-  void editStory() {
+  void editStory() async {
     if (userStory.value != null) {
-      Get.toNamed(AppRoutes.editStory, arguments: userStory.value);
+      final result = await Get.toNamed(
+        AppRoutes.editStory,
+        arguments: userStory.value,
+      );
+      if (result == true) {
+        fetchStoryDetail(userStory.value!.id);
+      }
     } else {
       Get.snackbar('Lỗi', 'Không tìm thấy thông tin truyện để sửa');
     }

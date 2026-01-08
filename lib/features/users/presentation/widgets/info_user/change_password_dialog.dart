@@ -42,25 +42,30 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDarkMode ? Colors.white : AppColor.slate900;
-    final inputFillColor = isDarkMode ? Colors.grey.shade800 : AppColor.gray100;
+
+    final fillColor = isDarkMode ? Colors.transparent : AppColor.gray100;
+    final borderColor = isDarkMode ? Colors.white24 : Colors.grey.shade400;
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       backgroundColor: isDarkMode ? AppColor.backgroundDark1 : Colors.white,
+      insetPadding: const EdgeInsets.all(20),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                "Đổi mật khẩu",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: textColor,
+              Center(
+                child: Text(
+                  "Đổi mật khẩu",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -70,7 +75,8 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                 obscureText: _obscureOld,
                 onToggle: () => setState(() => _obscureOld = !_obscureOld),
                 textColor: textColor,
-                fillColor: inputFillColor,
+                fillColor: fillColor,
+                borderColor: borderColor,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Vui lòng nhập mật khẩu hiện tại";
@@ -85,7 +91,8 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                 obscureText: _obscureNew,
                 onToggle: () => setState(() => _obscureNew = !_obscureNew),
                 textColor: textColor,
-                fillColor: inputFillColor,
+                fillColor: fillColor,
+                borderColor: borderColor,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Vui lòng nhập mật khẩu mới";
@@ -104,7 +111,8 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                 onToggle: () =>
                     setState(() => _obscureConfirm = !_obscureConfirm),
                 textColor: textColor,
-                fillColor: inputFillColor,
+                fillColor: fillColor,
+                borderColor: borderColor,
                 validator: (value) {
                   if (value != _newPassController.text) {
                     return "Mật khẩu xác nhận không khớp";
@@ -114,33 +122,45 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
               ),
               const SizedBox(height: 32),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () => Get.back(),
-                    child: Text(
-                      "Hủy",
-                      style: TextStyle(color: Colors.grey.shade600),
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Get.back(),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        side: BorderSide(color: borderColor),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        "Hủy",
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  ElevatedButton(
-                    onPressed: _submit,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: _submit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text(
-                      "Lưu thay đổi",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                      child: const Text(
+                        "Lưu thay đổi",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
@@ -160,6 +180,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     required VoidCallback onToggle,
     required Color textColor,
     required Color fillColor,
+    required Color borderColor,
     String? Function(String?)? validator,
   }) {
     return TextFormField(
@@ -172,17 +193,21 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
         labelStyle: TextStyle(color: Colors.grey.shade500),
         filled: true,
         fillColor: fillColor,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide.none,
-        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: borderColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColor.primary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.red, width: 1.5),
         ),
         suffixIcon: IconButton(
           icon: Icon(

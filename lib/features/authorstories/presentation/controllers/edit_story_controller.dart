@@ -11,10 +11,8 @@ import '../../data/models/create_story_request.dart';
 import '../../domain/usecases/create_story_usecase.dart';
 
 import '../../domain/entities/author_story_detail_entity.dart';
-import 'package:pho_truyen/core/utils/app_dialogs.dart';
+
 import 'package:pho_truyen/features/story/data/models/filter_settings_model.dart';
-import 'author_stories_controller.dart';
-import 'your_story_detail_controller.dart';
 
 class EditStoryController extends GetxController {
   final CreateStoryUseCase createStoryUseCase;
@@ -231,25 +229,8 @@ class EditStoryController extends GetxController {
       },
       (success) {
         if (success) {
-          AppDialogs.showInfoDialog(
-            title: "Thông báo",
-            message: "Cập nhật truyện thành công",
-            buttonText: "Đồng ý",
-            onPressed: () {
-              if (Get.isRegistered<AuthorStoriesController>()) {
-                Get.find<AuthorStoriesController>().fetchStories();
-              }
-              if (_storyDetail != null &&
-                  Get.isRegistered<YourStoryDetailController>()) {
-                Get.find<YourStoryDetailController>().fetchStoryDetail(
-                  _storyDetail!.id,
-                );
-              }
-
-              Get.back(); // Back to detail page
-              Get.snackbar('Thành công', 'Cập nhật truyện thành công');
-            },
-          );
+          Get.back(result: true);
+          Get.snackbar('Thành công', 'Cập nhật truyện thành công');
         } else {
           Get.snackbar('Lỗi', 'Cập nhật truyện thất bại');
         }

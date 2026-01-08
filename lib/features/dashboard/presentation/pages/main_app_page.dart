@@ -31,56 +31,44 @@ class MainAppPage extends GetView<MainAppController> {
       final i = controller.index.value;
 
       return Scaffold(
-        // extendBody: true, // Removed to prevent blocking content
-        // ignore: sort_child_properties_last
         body: IndexedStack(index: i, children: _contents),
         bottomNavigationBar: Container(
-          margin: const EdgeInsets.fromLTRB(14, 0, 14, 18),
           decoration: BoxDecoration(
             color: AppColor.backgroundDark1,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey[800]!, width: 0.6),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
-              ),
-            ],
+            border: Border(
+              top: BorderSide(color: Colors.white.withOpacity(0.1), width: 1),
+            ),
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(
-                    Icons.home_rounded,
-                    'Trang chủ',
-                    0 == i,
-                    () => controller.onTabChange(0),
-                  ),
-                  _buildNavItem(
-                    Icons.grid_view_rounded,
-                    'Thư viện',
-                    1 == i,
-                    () => controller.onTabChange(1),
-                  ),
-                  _buildNavItem(
-                    Icons.menu_book_rounded,
-                    'Tủ sách',
-                    2 == i,
-                    () => controller.onTabChange(2),
-                  ),
-                  _buildNavItem(
-                    Icons.person_rounded,
-                    'Tài khoản',
-                    3 == i,
-                    () => controller.onTabChange(3),
-                  ),
-                ],
-              ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildNavItem(
+                  Icons.home_rounded,
+                  'Trang chủ',
+                  0 == i,
+                  () => controller.onTabChange(0),
+                ),
+                _buildNavItem(
+                  Icons.grid_view_rounded,
+                  'Thư viện',
+                  1 == i,
+                  () => controller.onTabChange(1),
+                ),
+                _buildNavItem(
+                  Icons.menu_book_rounded,
+                  'Tủ sách',
+                  2 == i,
+                  () => controller.onTabChange(2),
+                ),
+                _buildNavItem(
+                  Icons.person_rounded,
+                  'Tài khoản',
+                  3 == i,
+                  () => controller.onTabChange(3),
+                ),
+              ],
             ),
           ),
         ),
@@ -99,18 +87,18 @@ class MainAppPage extends GetView<MainAppController> {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.fromLTRB(14, 11, 14, 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: 26),
+            Icon(icon, color: color, size: 24),
             const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
                 color: color,
                 fontSize: 10,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             ),
           ],

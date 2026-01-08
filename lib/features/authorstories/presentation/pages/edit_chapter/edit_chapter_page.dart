@@ -33,7 +33,8 @@ class EditChapterPage extends GetView<EditChapterController> {
             CustomTextField(
               controller: controller.nameController,
               hintText: 'Nhập tên chương',
-              fillColor: AppColor.inputFillColor(context),
+              fillColor: Colors.transparent,
+              borderColor: Colors.white24,
               textColor: AppColor.textColor(context),
             ),
             const SizedBox(height: 16),
@@ -48,7 +49,8 @@ class EditChapterPage extends GetView<EditChapterController> {
               controller: controller.contentController,
               hintText: 'Nhập nội dung chương',
               maxLines: 10,
-              fillColor: AppColor.inputFillColor(context),
+              fillColor: Colors.transparent,
+              borderColor: Colors.white24,
               textColor: AppColor.textColor(context),
             ),
             const SizedBox(height: 16),
@@ -58,7 +60,8 @@ class EditChapterPage extends GetView<EditChapterController> {
               controller: controller.noteController,
               hintText: 'Nhập chú giải',
               maxLines: 5,
-              fillColor: AppColor.inputFillColor(context),
+              fillColor: Colors.transparent,
+              borderColor: Colors.white24,
               textColor: AppColor.textColor(context),
             ),
             const SizedBox(height: 16),
@@ -67,9 +70,9 @@ class EditChapterPage extends GetView<EditChapterController> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
-                color: AppColor.inputFillColor(context),
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.transparent),
+                border: Border.all(color: Colors.white24),
               ),
               child: Obx(
                 () => DropdownButtonHideUnderline(

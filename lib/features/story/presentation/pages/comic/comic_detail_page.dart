@@ -11,6 +11,7 @@ import 'package:pho_truyen/shared/widgets/button/auth_widget.dart';
 import 'package:pho_truyen/shared/widgets/button/dialog_login.dart';
 import 'package:pho_truyen/shared/widgets/item_hashtags.dart';
 import 'package:pho_truyen/features/auth/presentation/widgets/profile_detail.dart';
+import 'package:pho_truyen/features/author/presentation/widgets/donate_dialog.dart';
 import 'package:pho_truyen/features/story/presentation/controllers/comic/comic_detail_controller.dart';
 import 'package:pho_truyen/core/router/app_routes.dart';
 import 'package:pho_truyen/features/story/data/models/comic_model.dart';
@@ -417,7 +418,17 @@ class ComicDetailPage extends StatelessWidget {
             onGiftPressed: () {
               if (Get.isRegistered<MainAppController>() &&
                   Get.find<MainAppController>().isLoggedIn.value) {
-                AppActions.opentoast(context);
+                showDialog(
+                  context: context,
+                  builder: (context) => DonateDialog(
+                    onDonate: (amount) {
+                      Get.find<ComicDetailController>().donate(
+                        comicDetail.authorId,
+                        amount,
+                      );
+                    },
+                  ),
+                );
               } else {
                 Get.dialog(const DialogLogin());
               }
