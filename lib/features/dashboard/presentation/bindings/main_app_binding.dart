@@ -12,45 +12,74 @@ import '../../../auth/data/datasources/forgot_password_remote_datasource.dart';
 import '../../../auth/data/repositories/auth_repository_impl.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../../auth/domain/usecases/refresh_token_usecase.dart';
+import '../../../home/data/datasources/home_remote_data_source.dart';
+import '../../../home/data/repositories/home_repository_impl.dart';
+import '../../../home/domain/repositories/home_repository.dart';
+import '../../../home/domain/usecases/get_home_usecase.dart';
+import '../../../home/presentation/controllers/home_controller.dart';
 
 class MainAppBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<MainAppController>(() => MainAppController());
-    Get.lazyPut(() => DioClient(), fenix: true);
+    Get.lazyPut<DioClient>(() => DioClient(), fenix: true);
 
     // Search Dependencies
     Get.lazyPut<SearchRemoteDataSource>(
-      () => SearchRemoteDataSourceImpl(dioClient: Get.find()),
+      () => SearchRemoteDataSourceImpl(dioClient: Get.find<DioClient>()),
     );
     Get.lazyPut<SearchRepository>(
-      () => SearchRepositoryImpl(remoteDataSource: Get.find()),
+      () => SearchRepositoryImpl(
+        remoteDataSource: Get.find<SearchRemoteDataSource>(),
+      ),
     );
-    Get.lazyPut(() => SearchStoriesUseCase(Get.find()));
-
+    Get.lazyPut<SearchStoriesUseCase>(
+      () => SearchStoriesUseCase(Get.find<SearchRepository>()),
+    );
     Get.lazyPut<LibraryController>(
-      () => LibraryController(searchStoriesUseCase: Get.find()),
+      () => LibraryController(
+        searchStoriesUseCase: Get.find<SearchStoriesUseCase>(),
+      ),
     );
 
     // Auth Dependencies for Token Refresh
     Get.lazyPut<LoginRemoteDataSource>(
-      () => LoginRemoteDataSourceImpl(dioClient: Get.find()),
+      () => LoginRemoteDataSourceImpl(dioClient: Get.find<DioClient>()),
     );
-    // Mock/Empty implementations for unused datasources if possible, or just real ones
     Get.lazyPut<RegisterRemoteDataSource>(
-      () => RegisterRemoteDataSourceImpl(dioClient: Get.find()),
+      () => RegisterRemoteDataSourceImpl(dioClient: Get.find<DioClient>()),
     );
     Get.lazyPut<ForgotPasswordRemoteDataSource>(
-      () => ForgotPasswordRemoteDataSourceImpl(dioClient: Get.find()),
+      () =>
+          ForgotPasswordRemoteDataSourceImpl(dioClient: Get.find<DioClient>()),
     );
 
     Get.lazyPut<AuthRepository>(
       () => AuthRepositoryImpl(
-        loginRemoteDataSource: Get.find(),
-        registerRemoteDataSource: Get.find(),
-        forgotPasswordRemoteDataSource: Get.find(),
+        loginRemoteDataSource: Get.find<LoginRemoteDataSource>(),
+        registerRemoteDataSource: Get.find<RegisterRemoteDataSource>(),
+        forgotPasswordRemoteDataSource:
+            Get.find<ForgotPasswordRemoteDataSource>(),
       ),
     );
-    Get.lazyPut(() => RefreshTokenUseCase(Get.find()));
+    Get.lazyPut<RefreshTokenUseCase>(
+      () => RefreshTokenUseCase(Get.find<AuthRepository>()),
+    );
+
+    // Home Dependencies
+    Get.lazyPut<HomeRemoteDataSource>(
+      () => HomeRemoteDataSourceImpl(dioClient: Get.find<DioClient>()),
+    );
+    Get.lazyPut<HomeRepository>(
+      () => HomeRepositoryImpl(
+        remoteDataSource: Get.find<HomeRemoteDataSource>(),
+      ),
+    );
+    Get.lazyPut<GetHomeUseCase>(
+      () => GetHomeUseCase(repository: Get.find<HomeRepository>()),
+    );
+    Get.lazyPut<HomeController>(
+      () => HomeController(getHomeUseCase: Get.find<GetHomeUseCase>()),
+    );
   }
 }

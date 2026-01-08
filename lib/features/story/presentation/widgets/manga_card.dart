@@ -63,15 +63,16 @@ class MangaCard extends StatelessWidget {
             const SizedBox(height: 4),
 
             // 3. Phần Tác giả
-            Text(
-              author.isNotEmpty ? author : 'Unknown',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12,
-                color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+            if (author.isNotEmpty && author != 'Unknown')
+              Text(
+                author,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+                ),
               ),
-            ),
           ],
         ),
       ),

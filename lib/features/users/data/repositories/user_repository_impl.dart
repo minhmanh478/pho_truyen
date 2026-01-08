@@ -120,4 +120,16 @@ class UserRepositoryImpl implements UserRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> buyVip(int timeId) async {
+    try {
+      final result = await remoteDataSource.buyVip(timeId);
+      return Right(result);
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.error?.toString() ?? 'Something went wrong'));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

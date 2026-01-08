@@ -103,7 +103,7 @@ class ChapterListModal extends StatelessWidget {
                       color: isCurrent ? AppColor.primary : Colors.grey,
                     ),
                     title: Text(
-                      chapter.name,
+                      'Chương ${chapter.chapterNumber}: ${chapter.name}',
                       style: TextStyle(
                         fontWeight: isCurrent
                             ? FontWeight.bold
@@ -111,10 +111,33 @@ class ChapterListModal extends StatelessWidget {
                         color: isCurrent ? AppColor.primary : Colors.white,
                       ),
                     ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        chapter.isLock == 1
+                            ? 'Giá: ${chapter.price} xu'
+                            : 'Miễn phí',
+                        style: TextStyle(
+                          color: chapter.isLock == 1
+                              ? Colors.amber
+                              : Colors.grey[500],
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    trailing: chapter.isLock == 1
+                        ? const Icon(Icons.lock, size: 16, color: Colors.amber)
+                        : (chapter.price > 0
+                              ? const Icon(
+                                  Icons.lock_open,
+                                  size: 16,
+                                  color: Colors.green,
+                                )
+                              : null),
                     onTap: () {
                       if (!isCurrent) {
                         controller.jumpToChapter(chapter.id);
-                        Get.back(); // Close modal
+                        Get.back();
                       }
                     },
                   );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
 import '../../../controllers/account/info_author_controller.dart';
@@ -55,6 +56,10 @@ class _InfoAuthorPageState extends State<InfoAuthorPage> {
     final isDarkMode = AppColor.isDarkMode(context);
     final Color textColor = AppColor.textColor(context);
     final Color inputFillColor = AppColor.inputFillColor(context);
+    final Color? borderColor = isDarkMode ? Colors.white24 : null;
+    final Color effectiveFillColor = isDarkMode
+        ? Colors.transparent
+        : inputFillColor;
 
     return Scaffold(
       appBar: AppBar(
@@ -102,8 +107,9 @@ class _InfoAuthorPageState extends State<InfoAuthorPage> {
               CustomTextField(
                 controller: _bankNameController,
                 hintText: "Nhập tên ngân hàng (VD: MB Bank)",
-                fillColor: inputFillColor,
+                fillColor: effectiveFillColor,
                 textColor: textColor,
+                borderColor: borderColor,
               ),
               const SizedBox(height: 16),
 
@@ -113,8 +119,9 @@ class _InfoAuthorPageState extends State<InfoAuthorPage> {
               CustomTextField(
                 controller: _bankNumberController,
                 hintText: "Nhập số tài khoản",
-                fillColor: inputFillColor,
+                fillColor: effectiveFillColor,
                 textColor: textColor,
+                borderColor: borderColor,
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
@@ -125,8 +132,10 @@ class _InfoAuthorPageState extends State<InfoAuthorPage> {
               CustomTextField(
                 controller: _bankAccountHolderNameController,
                 hintText: "Nhập tên chủ tài khoản",
-                fillColor: inputFillColor,
+                fillColor: effectiveFillColor,
                 textColor: textColor,
+                borderColor: borderColor,
+                inputFormatters: [UpperCaseTextFormatter()],
               ),
               const SizedBox(height: 16),
 
@@ -148,8 +157,9 @@ class _InfoAuthorPageState extends State<InfoAuthorPage> {
               CustomTextField(
                 controller: _introduceController,
                 hintText: "Nhập giới thiệu bản thân",
-                fillColor: inputFillColor,
+                fillColor: effectiveFillColor,
                 textColor: textColor,
+                borderColor: borderColor,
                 maxLines: 3,
               ),
               const SizedBox(height: 16),
@@ -230,5 +240,32 @@ class _InfoAuthorPageState extends State<InfoAuthorPage> {
         ),
       ),
     );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    String text = newValue.text;
+    String unaccented = _removeDiacritics(text);
+    return newValue.copyWith(
+      text: unaccented.toUpperCase(),
+      selection: newValue.selection,
+    );
+  }
+
+  String _removeDiacritics(String str) {
+    var withDia =
+        'áàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐ';
+    var withoutDia =
+        'aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyydAAAAAAAAAAAAAAAAAEEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOOOUUUUUUUUUUUYYYYYD';
+
+    for (int i = 0; i < withDia.length; i++) {
+      str = str.replaceAll(withDia[i], withoutDia[i]);
+    }
+    return str;
   }
 }

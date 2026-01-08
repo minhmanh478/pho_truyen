@@ -3,18 +3,23 @@ import '../../../domain/entities/user_profile_entity.dart';
 import '../../../domain/usecases/change_password_usecase.dart';
 import '../../../domain/usecases/get_user_profile_usecase.dart';
 import '../../../domain/usecases/update_profile_usecase.dart';
+import '../../../../common/domain/usecases/upload_image_usecase.dart';
+import 'dart:io';
 
 class UserController extends GetxController {
   final GetUserProfileUseCase getUserProfileUseCase;
   final UpdateProfileUseCase updateProfileUseCase;
   final ChangePasswordUseCase changePasswordUseCase;
+  final UploadImageUseCase uploadImageUseCase;
 
   final Rx<UserProfileEntity?> userProfile = Rx<UserProfileEntity?>(null);
+  bool hasShownAffiliateAd = false;
 
   UserController({
     required this.getUserProfileUseCase,
     required this.updateProfileUseCase,
     required this.changePasswordUseCase,
+    required this.uploadImageUseCase,
   });
 
   Future<UserProfileEntity?> fetchUserProfile() async {
@@ -71,6 +76,19 @@ class UserController extends GetxController {
       },
       (success) {
         Get.snackbar("Thành công", "Đổi mật khẩu thành công");
+      },
+    );
+  }
+
+  Future<String?> uploadAvatar(File file) async {
+    final result = await uploadImageUseCase(file);
+    return result.fold(
+      (failure) {
+        Get.snackbar("Lỗi", failure.message);
+        return null;
+      },
+      (uploadedFile) {
+        return uploadedFile.url;
       },
     );
   }

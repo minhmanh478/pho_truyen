@@ -13,7 +13,7 @@ class LibraryController extends GetxController {
   final SearchStoriesUseCase searchStoriesUseCase;
   final GetStoriesUseCase _getStoriesUseCase = GetStoriesUseCase(
     repository: ComicRepositoryImpl(
-      remoteDataSource: ComicRemoteDataSourceImpl(),
+      remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
     ),
   );
 
@@ -28,6 +28,18 @@ class LibraryController extends GetxController {
   String? _currentChapterMax;
   String? _currentTimeUpdate;
   String? _currentTag;
+
+  String _currentOrder = 'update';
+  String _currentSort = 'desc';
+
+  String? get currentCategoryId => _currentCategoryId;
+  String? get currentState => _currentState;
+  String? get currentChapterMin => _currentChapterMin;
+  String? get currentChapterMax => _currentChapterMax;
+  String? get currentTimeUpdate => _currentTimeUpdate;
+  String? get currentTag => _currentTag;
+  String get currentOrder => _currentOrder;
+  String get currentSort => _currentSort;
 
   @override
   void onInit() {
@@ -45,8 +57,8 @@ class LibraryController extends GetxController {
         chapterMax: _currentChapterMax,
         timeUpdate: _currentTimeUpdate,
         tag: _currentTag,
-        order: 'chapter_count',
-        sort: 'desc',
+        order: _currentOrder,
+        sort: _currentSort,
         code: 'STORY_FULL',
       );
 
@@ -73,6 +85,12 @@ class LibraryController extends GetxController {
     _currentTimeUpdate = timeUpdate;
     _currentTag = tag;
 
+    fetchLibraryStories();
+  }
+
+  void applySort(String order, String sort) {
+    _currentOrder = order;
+    _currentSort = sort;
     fetchLibraryStories();
   }
 

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pho_truyen/core/constants/app_paths.dart';
 import 'package:pho_truyen/core/utils/app_actions.dart';
+import 'package:pho_truyen/core/utils/app_dialogs.dart';
 import 'package:pho_truyen/core/router/app_routes.dart';
 import 'package:pho_truyen/features/users/presentation/widgets/info_user/info_user_avatar.dart';
+import '../widgets/info_user/vip_badge.dart';
 import '../../../../core/constants/app_color.dart';
 import '../../../../shared/widgets/button/section_header.dart';
 import '../../../../shared/widgets/button/settings_item.dart';
@@ -119,53 +121,79 @@ class _UserProfilePageState extends State<UserProfilePage> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  const SizedBox(height: 10),
-                  // Avatar
-                  InfoUserAvatar(
-                    icon: Icons.camera_alt,
-                    avatarUrl: user.avatar,
-                    isDarkMode: isDarkMode,
-                    onCameraTap: () {
-                      _refreshProfile();
-                    },
-                    radius: 45,
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Tên & Email
-                  Text(
-                    user.fullName,
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: cardBgColor,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${user.email} (ID:${user.id})',
-                    style: TextStyle(color: secondaryTextColor, fontSize: 14),
-                  ),
-
-                  // Ví tiền (nếu có)
-                  if (wallet != null) ...[
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          'Số dư: ${wallet.totalBalance}',
-                          style: const TextStyle(
-                            color: Colors.amber,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                        // Avatar (Left)
+                        InfoUserAvatar(
+                          icon: Icons.camera_alt,
+                          avatarUrl: user.avatar,
+                          isDarkMode: isDarkMode,
+                          onCameraTap: () {
+                            _refreshProfile();
+                          },
+                          radius: 50,
+                        ),
+                        const SizedBox(width: 16),
+
+                        // User Details (Right)
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user.fullName,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${user.email} (${user.id})',
+                                style: TextStyle(
+                                  color: secondaryTextColor,
+                                  fontSize: 13,
+                                ),
+                              ),
+                              if (profile.vip.isNotEmpty) ...[
+                                const SizedBox(height: 8),
+                                VipBadge(vipId: profile.vip.first.vipId),
+                              ],
+                              if (wallet != null) ...[
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Số dư: ${wallet.totalBalance}',
+                                      style: const TextStyle(
+                                        color: Colors.amber,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Image.asset(
+                                      AppPaths.icRuby,
+                                      width: 14,
+                                      height: 14,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        Image.asset(AppPaths.icRuby, width: 15, height: 15),
                       ],
                     ),
-                  ],
+                  ),
                   const SizedBox(height: 0),
 
                   // Account Actions
@@ -217,8 +245,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     textColor: textColor,
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
-                    onTap: () {
-                      AppActions.opentoast(context);
+                    onTap: () async {
+                      await Get.toNamed(AppRoutes.yourStories);
                     },
                     isDarkMode: isDarkMode,
                   ),
@@ -228,8 +256,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     textColor: textColor,
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
-                    onTap: () {
-                      AppActions.opentoast(context);
+                    onTap: () async {
+                      await Get.toNamed(AppRoutes.postNewStory);
                     },
                     isDarkMode: isDarkMode,
                   ),
@@ -304,7 +332,20 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     secondaryTextColor: secondaryTextColor,
                     cardBgColor: cardBgColor,
                     onTap: () {
-                      AppActions.opentoast(context);
+                      AppDialogs.showConfirmDialog(
+                        title: "Xóa tài khoản",
+                        message:
+                            "Bạn có muốn xóa tài khoản khỏi hệ thống không?\nLưu ý: bạn không thể đăng nhập khi đã xóa tài khoản.",
+                        confirmText: "Xóa tài khoản",
+                        cancelText: "Đóng",
+                        onConfirm: () {
+                          Get.back();
+                          Get.find<MainAppController>().logout();
+                        },
+                        onCancel: () {
+                          Get.back();
+                        },
+                      );
                     },
                     isDarkMode: isDarkMode,
                   ),

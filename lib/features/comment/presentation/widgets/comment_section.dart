@@ -53,18 +53,6 @@ class CommentSection extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       }
 
-      if (commentController.comments.isEmpty) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Center(
-            child: Text(
-              "Chưa có bình luận nào.",
-              style: TextStyle(color: Colors.white70),
-            ),
-          ),
-        );
-      }
-
       return Column(
         children: [
           Padding(
@@ -93,38 +81,49 @@ class CommentSection extends StatelessWidget {
               ],
             ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: commentController.comments.map((comment) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: SizedBox(
-                    width: 320,
-                    child: CommentItem(
-                      comment: comment,
-                      onLike: (id) => commentController.likeComment(id),
-                      onReply: (comment) {
-                        if (!Get.isRegistered<MainAppController>() ||
-                            !Get.find<MainAppController>().isLoggedIn.value) {
-                          Get.dialog(const DialogLogin());
-                          return;
-                        }
-                        Get.toNamed(
-                          '/comment-list',
-                          arguments: {
-                            'comicId': comicId,
-                            'replyingTo': comment,
-                          },
-                        );
-                      },
+          if (commentController.comments.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Center(
+                child: Text(
+                  "Chưa có bình luận nào.",
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ),
+            )
+          else
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: commentController.comments.map((comment) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: SizedBox(
+                      width: 320,
+                      child: CommentItem(
+                        comment: comment,
+                        onLike: (id) => commentController.likeComment(id),
+                        onReply: (comment) {
+                          if (!Get.isRegistered<MainAppController>() ||
+                              !Get.find<MainAppController>().isLoggedIn.value) {
+                            Get.dialog(const DialogLogin());
+                            return;
+                          }
+                          Get.toNamed(
+                            '/comment-list',
+                            arguments: {
+                              'comicId': comicId,
+                              'replyingTo': comment,
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
+                  );
+                }).toList(),
+              ),
             ),
-          ),
         ],
       );
     });

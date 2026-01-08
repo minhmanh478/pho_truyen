@@ -27,4 +27,5 @@ abstract class UserRepository {
     UpdateInfoExtendRequest request,
   );
   Future<Either<Failure, UserExtendInfoModel>> getUserExtendInfo();
+  Future<Either<Failure, bool>> buyVip(int timeId);
 }

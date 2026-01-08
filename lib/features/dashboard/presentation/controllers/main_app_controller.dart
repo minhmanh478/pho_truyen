@@ -7,6 +7,7 @@ import '../../../users/presentation/controllers/account/user_controller.dart';
 import '../../../story/presentation/controllers/library_controller.dart';
 import '../../../story/presentation/controllers/bookcase/bookcase_controller.dart';
 import '../../../auth/domain/usecases/refresh_token_usecase.dart';
+import '../../../home/presentation/controllers/home_controller.dart';
 
 class MainAppController extends GetxController {
   final RxInt index = 0.obs;
@@ -67,7 +68,28 @@ class MainAppController extends GetxController {
       print("CheckLoginStatus Error: $e");
       isLoggedIn.value = false;
     } finally {
+      // Fetch Home Data before initializing
+      await _fetchHomeData();
       isInitialized.value = true;
+    }
+  }
+
+  Future<void> _fetchHomeData() async {
+    if (Get.isRegistered<HomeController>()) {
+      final homeController = Get.find<HomeController>();
+      int retryCount = 0;
+      while (retryCount < 50) {
+        if (isClosed) return;
+
+        final data = await homeController.getHomeData();
+        if (data != null && data.data != null) {
+          print("Initial Home Data loaded.");
+          break;
+        }
+        print("Home data fetch failed. Retrying in 2 seconds...");
+        await Future.delayed(const Duration(seconds: 2));
+        retryCount++;
+      }
     }
   }
 

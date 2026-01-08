@@ -6,7 +6,6 @@ import 'package:pho_truyen/core/router/app_routes.dart';
 import 'package:pho_truyen/core/utils/app_actions.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
 import 'package:pho_truyen/features/auth/presentation/controllers/auth_binding.dart';
-import 'package:pho_truyen/features/auth/presentation/pages/account/login_page.dart';
 import 'package:pho_truyen/features/auth/presentation/pages/account/register/register_page.dart';
 import 'package:pho_truyen/shared/widgets/button/section_header.dart';
 import 'package:pho_truyen/shared/widgets/button/settings_item.dart';

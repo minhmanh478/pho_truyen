@@ -4,6 +4,7 @@ import 'package:pho_truyen/features/dashboard/presentation/pages/main_app_page.d
 import 'package:pho_truyen/features/users/presentation/controllers/account/user_binding.dart';
 import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/ruby/transaction_history.dart';
 import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/ruby/vip_registration_page.dart';
+import '../../features/users/presentation/controllers/vip_registration_binding.dart';
 import 'package:pho_truyen/features/users/presentation/pages/user_profile_page.dart';
 import 'package:pho_truyen/features/author/presentation/controllers/author_detail_binding.dart';
 import 'package:pho_truyen/features/author/presentation/pages/author_detail_page.dart';
@@ -19,9 +20,23 @@ import 'package:pho_truyen/features/auth/presentation/pages/account/forgot_passw
 import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/account/info_user_page.dart';
 import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/account/info_author_page.dart';
 import 'package:pho_truyen/features/users/presentation/pages/subfolder_page/ruby/loaded_ruby_page.dart';
-import 'package:pho_truyen/features/home/presentation/pages/notification_page.dart';
+import 'package:pho_truyen/features/notification/presentation/pages/notification_page.dart';
+import 'package:pho_truyen/features/notification/presentation/pages/notification_detail_page.dart';
+import 'package:pho_truyen/features/notification/presentation/bindings/notification_binding.dart';
 import 'package:pho_truyen/features/story/presentation/pages/library/fillter_hastags_page.dart';
 import 'package:pho_truyen/features/comment/presentation/pages/comment_list_page.dart';
+import '../../features/authorstories/presentation/controllers/author_stories_binding.dart';
+import '../../features/authorstories/presentation/controllers/post_new_story_binding.dart';
+import '../../features/authorstories/presentation/pages/your_stories/your_stories_page.dart';
+import '../../features/authorstories/presentation/pages/post_new_story/post_new_story_page.dart';
+import '../../features/authorstories/presentation/controllers/your_story_detail_binding.dart';
+import '../../features/authorstories/presentation/pages/your_story_detail/your_story_detail_page.dart';
+import '../../features/authorstories/presentation/controllers/edit_story_binding.dart';
+import '../../features/authorstories/presentation/pages/edit_story/edit_story_page.dart';
+import '../../features/authorstories/presentation/controllers/author_chapter_detail_binding.dart';
+import '../../features/authorstories/presentation/pages/author_chapter_detail/author_chapter_detail_page.dart';
+import '../../features/authorstories/presentation/controllers/edit_chapter_binding.dart';
+import '../../features/authorstories/presentation/pages/edit_chapter/edit_chapter_page.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -72,14 +87,53 @@ class AppPages {
     GetPage(
       name: AppRoutes.vipRegistration,
       page: () => const VipRegistrationPage(),
+      binding: VipRegistrationBinding(),
     ),
     GetPage(name: AppRoutes.loadedRuby, page: () => const LoadedRubyPage()),
     GetPage(
       name: AppRoutes.transactionHistory,
       page: () => const TransactionHistoryPage(),
     ),
-    GetPage(name: AppRoutes.notification, page: () => const NotificationPage()),
+    GetPage(
+      name: AppRoutes.notification,
+      page: () => const NotificationPage(),
+      binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.notificationDetail,
+      page: () => const NotificationDetailPage(),
+    ),
     GetPage(name: AppRoutes.filterHashtags, page: () => FillterHastagsPage()),
     GetPage(name: AppRoutes.commentList, page: () => const CommentListPage()),
+    GetPage(
+      name: AppRoutes.yourStories,
+      page: () => const YourStoriesPage(),
+      binding: AuthorStoriesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.postNewStory,
+      page: () => const PostNewStoryPage(),
+      binding: PostNewStoryBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.yourStoryDetail,
+      page: () => const YourStoryDetailPage(),
+      binding: YourStoryDetailBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.editStory,
+      page: () => const EditStoryPage(),
+      binding: EditStoryBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.authorChapterDetail,
+      page: () => const AuthorChapterDetailPage(),
+      binding: AuthorChapterDetailBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.editChapter,
+      page: () => const EditChapterPage(),
+      binding: EditChapterBinding(),
+    ),
   ];
 }

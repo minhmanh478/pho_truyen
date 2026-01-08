@@ -14,6 +14,14 @@ abstract class AppRoutes {
   static const loadedRuby = '/loaded-ruby';
   static const transactionHistory = '/transaction-history';
   static const notification = '/notification';
+  static const notificationDetail = '/notification-detail';
   static const filterHashtags = '/filter-hashtags';
   static const commentList = '/comment-list';
+  static const authorStories = '/author-stories';
+  static const yourStories = '/your-stories';
+  static const postNewStory = '/post-new-story';
+  static const yourStoryDetail = '/your-story-detail';
+  static const editStory = '/edit-story';
+  static const authorChapterDetail = '/author-chapter-detail';
+  static const editChapter = '/edit-chapter';
 }

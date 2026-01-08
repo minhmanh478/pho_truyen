@@ -51,6 +51,13 @@ dependencies:
   firebase_core: ^3.0.0
   cached_network_image: ^3.4.1
   flutter_launcher_icons: ^0.13.1 #logo
+  #notification
+  flutter_local_notifications: ^19.5.0
+  firebase_messaging: ^15.2.10
+  image_picker: ^1.2.1
+  flutter_image_compress: ^2.4.0
+  flutter_slidable: ^4.0.3
+  flutter_widget_from_html: ^0.17.1
 
 dev_dependencies:
   flutter_test:
@@ -76,11 +83,39 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-
   fonts:
     - family: Quicksand
       fonts:
-        - asset: assets/font/Quicksand-VariableFont_wght.ttf
+        - asset: assets/fonts/Quicksand/static/Quicksand-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Quicksand/static/Quicksand-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Quicksand/static/Quicksand-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Quicksand/static/Quicksand-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Quicksand/static/Quicksand-Bold.ttf
+          weight: 700
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/Roboto_Condensed-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto/Roboto_Condensed-ExtraLight.ttf
+          weight: 200
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat/static/Montserrat-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Montserrat/static/Montserrat-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat/static/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Montserrat/static/Montserrat-Bold.ttf
+          weight: 700
+
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

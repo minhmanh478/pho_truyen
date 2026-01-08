@@ -37,7 +37,9 @@ abstract class ComicRemoteDataSource {
 }
 
 class ComicRemoteDataSourceImpl implements ComicRemoteDataSource {
-  final DioClient dioClient = DioClient();
+  final DioClient dioClient;
+
+  ComicRemoteDataSourceImpl({required this.dioClient});
 
   @override
   Future<ComicDetailModel> getComicDetail(int id) async {

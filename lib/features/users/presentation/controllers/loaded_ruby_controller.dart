@@ -55,10 +55,14 @@ class LoadedRubyController extends GetxController {
     // In real app, this comes from API response
     return PaymentInfoModel(
       qrCodeUrl:
-          "https://img.vietqr.io/image/ACB-6692151-compact2.png?amount=$amount&addInfo=u103839t20251220t015711r5L2gk&accountName=NGUYEN%20MANH%20TUAN", // Example QR
-      bankAccount: "6692151",
-      bankName: "ACB",
-      accountName: "NGUYEN MANH TUAN",
+          //"https://img.vietqr.io/image/ACB-6692151-compact2.png?amount=$amount&addInfo=u103839t20251220t015711r5L2gk&accountName=NGUYEN%20MANH%20TUAN",
+          "https://img.vietqr.io/image/MB-010520049999-compact2.png?amount=$amount&addInfo=u103839t20251220t015711r5L2gk&accountName=LE%20MINH%20MANH",
+      bankAccount: //"6692151",
+          "010520049999",
+      bankName: //"ACB",
+          "MB",
+      accountName: //"NGUYEN MANH TUAN",
+          "LE MINH MANH",
       amount: amount,
       content: "u103839t20251220t015711r5L2gk",
       note:

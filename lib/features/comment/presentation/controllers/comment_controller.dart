@@ -5,7 +5,6 @@ import '../../domain/usecases/get_comments_usecase.dart';
 import '../../domain/usecases/like_comment_usecase.dart';
 import 'package:pho_truyen/features/dashboard/presentation/controllers/main_app_controller.dart';
 import 'package:pho_truyen/features/comment/domain/usecases/post_comment_usecase.dart';
-import 'package:pho_truyen/shared/widgets/button/dialog_login.dart';
 
 class CommentController extends GetxController {
   final GetCommentsUseCase getCommentsUseCase;

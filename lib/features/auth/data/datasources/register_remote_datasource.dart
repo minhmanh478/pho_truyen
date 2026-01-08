@@ -22,6 +22,14 @@ class RegisterRemoteDataSourceImpl implements RegisterRemoteDataSource {
         '/api/auth/register',
         data: request.toJson(),
       );
+
+      if (response.data == null || response.data is! Map<String, dynamic>) {
+        throw _createCustomException(
+          response.requestOptions,
+          'Phản hồi từ máy chủ không hợp lệ.',
+        );
+      }
+
       final baseResponse = BaseResponse<AuthModel>.fromJson(
         response.data,
         (json) => AuthModel.fromJson(json as Map<String, dynamic>),

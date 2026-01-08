@@ -13,7 +13,6 @@ class FillterHastagsPage extends StatelessWidget {
   final FilterHastagsController controller = Get.put(FilterHastagsController());
 
   final Color primaryColor = const Color(0xFF2C3E50);
-  final Color unselectedColor = Colors.grey[100]!;
 
   @override
   Widget build(BuildContext context) {
@@ -180,16 +179,16 @@ class FillterHastagsPage extends StatelessWidget {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: isSelected ? primaryColor : unselectedColor,
+                    color: isSelected ? primaryColor : Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: isSelected ? primaryColor : Colors.grey[300]!,
+                      color: isSelected ? primaryColor : Colors.white24,
                     ),
                   ),
                   child: Text(
                     option,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black54,
+                      color: isSelected ? Colors.white : Colors.white70,
                       fontWeight: isSelected
                           ? FontWeight.w600
                           : FontWeight.normal,

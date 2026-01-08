@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -10,6 +11,8 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final int maxLines;
   final IconData? suffixIcon;
+  final Color? borderColor;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     super.key,
@@ -21,6 +24,8 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.maxLines = 1,
     this.suffixIcon,
+    this.inputFormatters,
+    this.borderColor,
   });
 
   @override
@@ -29,6 +34,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       enabled: enabled,
       keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
       maxLines: maxLines,
       style: TextStyle(color: textColor),
       decoration: InputDecoration(
@@ -42,7 +48,21 @@ class CustomTextField extends StatelessWidget {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide.none,
+          borderSide: borderColor != null
+              ? BorderSide(color: borderColor!)
+              : BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: borderColor != null
+              ? BorderSide(color: borderColor!)
+              : BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: borderColor != null
+              ? BorderSide(color: borderColor!)
+              : BorderSide.none,
         ),
         suffixIcon: suffixIcon != null
             ? Icon(suffixIcon, color: Colors.grey)

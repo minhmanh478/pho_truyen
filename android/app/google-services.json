@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "435530727432",
+    "project_id": "pho-truyen",
+    "storage_bucket": "pho-truyen.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435530727432:android:6232ba0f4875f8843311bd",
+        "android_client_info": {
+          "package_name": "com.example.pho_truyen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435530727432-j4dopa9i5aulvd4q99qlsniniglinhmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0U2EszNuLwltAJ9mZCOW7rWUNV3HryaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435530727432-j4dopa9i5aulvd4q99qlsniniglinhmf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "435530727432-8ldam512rv86cpr6ja4rqtt3dmjg9d4v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.phoTruyen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

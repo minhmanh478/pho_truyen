@@ -6,7 +6,6 @@ import 'package:pho_truyen/core/constants/app_color.dart';
 
 import 'package:intl/intl.dart';
 import 'package:pho_truyen/core/constants/app_paths.dart';
-import 'package:pho_truyen/core/utils/app_actions.dart';
 import '../../../controllers/vip_registration_controller.dart';
 import '../../../../data/models/vip_package_model.dart';
 
@@ -18,9 +17,8 @@ class VipRegistrationPage extends StatefulWidget {
 }
 
 class _VipRegistrationPageState extends State<VipRegistrationPage> {
-  final VipRegistrationController controller = Get.put(
-    VipRegistrationController(userRepository: Get.find()),
-  );
+  final VipRegistrationController controller =
+      Get.find<VipRegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +138,7 @@ class _VipRegistrationPageState extends State<VipRegistrationPage> {
             height: 32,
             child: ElevatedButton(
               onPressed: () {
-                AppActions.opentoast(context);
+                controller.onRegisterVip(time);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF2C3E50),

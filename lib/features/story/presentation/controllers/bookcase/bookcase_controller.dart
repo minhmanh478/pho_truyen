@@ -10,16 +10,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 class BookcaseController extends GetxController {
   final GetFavoriteStoriesUseCase _getFavoriteStoriesUseCase =
       GetFavoriteStoriesUseCase(
-        ComicRepositoryImpl(remoteDataSource: ComicRemoteDataSourceImpl()),
+        ComicRepositoryImpl(
+          remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
+        ),
       );
 
   final GetViewedStoriesUseCase _getViewedStoriesUseCase =
       GetViewedStoriesUseCase(
-        ComicRepositoryImpl(remoteDataSource: ComicRemoteDataSourceImpl()),
+        ComicRepositoryImpl(
+          remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
+        ),
       );
 
   final GetReadHistoryUseCase _getReadHistoryUseCase = GetReadHistoryUseCase(
-    ComicRepositoryImpl(remoteDataSource: ComicRemoteDataSourceImpl()),
+    ComicRepositoryImpl(
+      remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
+    ),
   );
 
   final RxList<StoryModel> favoriteStories = <StoryModel>[].obs;

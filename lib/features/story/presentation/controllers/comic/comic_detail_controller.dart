@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pho_truyen/features/story/data/datasources/comic_remote_data_source.dart';
 import 'package:pho_truyen/features/story/data/models/comic_model.dart';
+import 'package:pho_truyen/features/home/data/models/story_model.dart';
 import 'package:pho_truyen/features/story/data/repositories/comic_repository_impl.dart';
 import 'package:pho_truyen/features/story/domain/usecases/get_comic_detail_usecase.dart';
 import 'package:pho_truyen/features/chapter/data/datasources/chapter_remote_data_source.dart';
@@ -13,7 +14,7 @@ import 'package:pho_truyen/features/story/presentation/controllers/bookcase/book
 class ComicDetailController extends GetxController {
   final GetComicDetailUseCase _getComicDetailUseCase = GetComicDetailUseCase(
     repository: ComicRepositoryImpl(
-      remoteDataSource: ComicRemoteDataSourceImpl(),
+      remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
     ),
   );
 
@@ -23,14 +24,17 @@ class ComicDetailController extends GetxController {
 
   final ToggleFavoriteStoryUseCase _toggleFavoriteStoryUseCase =
       ToggleFavoriteStoryUseCase(
-        ComicRepositoryImpl(remoteDataSource: ComicRemoteDataSourceImpl()),
+        ComicRepositoryImpl(
+          remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
+        ),
       );
 
   late Future<ComicDetailModel?> comicDetailFuture;
   final RxList<ChapterModel> chapters = <ChapterModel>[].obs;
   final RxBool isLoadingChapters = false.obs;
   final RxBool isFavorite = false.obs;
-  final RxSet<int> readChapterIds = <int>{}.obs; // Local state for now
+  final RxSet<int> readChapterIds = <int>{}.obs;
+  final Rx<StoryModel?> userReadingHistory = Rx<StoryModel?>(null);
 
   @override
   void onInit() {
@@ -42,9 +46,7 @@ class ComicDetailController extends GetxController {
       if (args is int) {
         id = args;
       } else if (args is String) {
-        // Handle legacy string args if necessary, or log error
         print('Error: Expected ID (int) but got String: $args');
-        // Try to parse if it happens to be a numeric string
         id = int.tryParse(args);
       } else if (args is Map) {
         id = args['id'];
@@ -56,6 +58,7 @@ class ComicDetailController extends GetxController {
       comicDetailFuture = getComicDetail(id);
       fetchChapters(id);
       _checkIfFavorite(id);
+      _checkReadingHistory(id);
     } else {
       comicDetailFuture = Future.error("Invalid ID");
     }
@@ -90,7 +93,6 @@ class ComicDetailController extends GetxController {
   }
 
   Future<void> toggleFavorite(int storyId) async {
-    // 1: Favorite, 0: Unfavorite
     print('ComicDetailController: Current isFavorite: ${isFavorite.value}');
     final newState = isFavorite.value ? 0 : 1;
     print('ComicDetailController: Toggling to state: $newState');
@@ -125,6 +127,30 @@ class ComicDetailController extends GetxController {
       isFavorite.value = isFav;
     } else {
       print('ComicDetailController: BookcaseController not registered');
+    }
+  }
+
+  void _checkReadingHistory(int storyId) {
+    if (Get.isRegistered<BookcaseController>()) {
+      final bookcaseController = Get.find<BookcaseController>();
+      if (bookcaseController.userId.value != 0 &&
+          bookcaseController.readStories.isEmpty) {
+        bookcaseController.fetchReadStories();
+      }
+
+      final history = bookcaseController.readStories.firstWhereOrNull(
+        (s) => s.id == storyId,
+      );
+      userReadingHistory.value = history;
+
+      ever(bookcaseController.readStories, (List<StoryModel> stories) {
+        final updatedHistory = stories.firstWhereOrNull((s) => s.id == storyId);
+        userReadingHistory.value = updatedHistory;
+      });
+    } else {
+      print(
+        'ComicDetailController: BookcaseController not registered for history check',
+      );
     }
   }
 

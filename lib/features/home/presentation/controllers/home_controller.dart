@@ -8,9 +8,13 @@ class HomeController extends GetxController {
   HomeController({GetHomeUseCase? getHomeUseCase})
     : _getHomeUseCase = getHomeUseCase ?? GetHomeUseCase();
 
+  final Rx<GetHomeResponse?> homeData = Rx<GetHomeResponse?>(null);
+
   Future<GetHomeResponse?> getHomeData() async {
     try {
-      return await _getHomeUseCase();
+      final response = await _getHomeUseCase();
+      homeData.value = response;
+      return response;
     } catch (e) {
       // Log error or rethrow if needed
       print("Error fetching home data: $e");

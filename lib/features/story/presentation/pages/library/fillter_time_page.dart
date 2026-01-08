@@ -2,16 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pho_truyen/core/constants/app_color.dart'; // Giả định path theo code bạn
-import 'package:pho_truyen/features/story/presentation/controllers/library/filler_time_controller.dart';
+import 'package:pho_truyen/core/constants/app_color.dart';
+import 'package:pho_truyen/features/story/presentation/controllers/library/filter_hastags_controller.dart';
+import 'package:pho_truyen/features/story/presentation/controllers/library_controller.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-class SortBottomSheet extends GetView<FillerTimeController> {
+class SortBottomSheet extends StatelessWidget {
   const SortBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(FillerTimeController());
+    // Ensure controller is initialized to fetch sort options if not already
+    final filterController = Get.put(FilterHastagsController());
+    final libraryController = Get.find<LibraryController>();
 
     return Container(
       width: double.infinity,
@@ -38,18 +41,6 @@ class SortBottomSheet extends GetView<FillerTimeController> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // HEADER: Line Indicator & Title & Close
-          // Center(
-          //   child: Container(
-          //     width: 40,
-          //     height: 4,
-          //     margin: const EdgeInsets.only(bottom: 20),
-          //     decoration: BoxDecoration(
-          //       color: Colors.white.withOpacity(0.2),
-          //       borderRadius: BorderRadius.circular(2),
-          //     ),
-          //   ),
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -74,18 +65,29 @@ class SortBottomSheet extends GetView<FillerTimeController> {
           ),
           Divider(color: Colors.white.withOpacity(0.1), height: 1),
           const SizedBox(height: 16),
-          Obx(
-            () => Column(
-              children: TimeType.values.map((type) {
-                final isSelected = controller.currentSort.value == type;
+          Obx(() {
+            if (filterController.sortOptions.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return Column(
+              children: filterController.sortOptions.map((option) {
+                // Check selection based on currentOrder and currentSort in LibraryController
+                final isSelected =
+                    libraryController.currentOrder == option.order &&
+                    libraryController.currentSort == option.sort;
+
                 return _buildSortOptionItem(
-                  title: controller.getTitle(type),
+                  title: option.title,
                   isSelected: isSelected,
-                  onTap: () => controller.changeSortType(type),
+                  onTap: () {
+                    libraryController.applySort(option.order, option.sort);
+                    Get.back();
+                  },
                 );
               }).toList(),
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );

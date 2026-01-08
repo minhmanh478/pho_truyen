@@ -58,7 +58,7 @@ class ComicDetailPage extends StatelessWidget {
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
-                    expandedHeight: 300,
+                    expandedHeight: 280,
                     pinned: true,
                     backgroundColor: Colors.black,
                     leading: IconButton(
@@ -127,8 +127,8 @@ class ComicDetailPage extends StatelessWidget {
                                               comicDetail.image!.isNotEmpty)
                                           ? Image.network(
                                               comicDetail.image!,
-                                              width: 100,
-                                              height: 150,
+                                              width: 108,
+                                              height: 155,
                                               fit: BoxFit.cover,
                                               errorBuilder:
                                                   (
@@ -168,26 +168,23 @@ class ComicDetailPage extends StatelessWidget {
                                   ],
                                 ),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                    horizontal: 14,
-                                  ),
+                                  padding: EdgeInsets.fromLTRB(12, 12, 12, 0),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       _buildStatItem(
-                                        Icons.menu_book,
+                                        Icons.library_books_rounded,
                                         'Chương',
                                         comicDetail.chapterCount.toString(),
                                       ),
                                       _buildStatItem(
-                                        Icons.remove_red_eye,
+                                        Icons.visibility_rounded,
                                         'Lượt xem',
                                         comicDetail.readCount.toString(),
                                       ),
                                       _buildStatItem(
-                                        Icons.favorite,
+                                        Icons.favorite_rounded,
                                         'Yêu thích',
                                         comicDetail.nominations.toString(),
                                       ),
@@ -231,26 +228,45 @@ class ComicDetailPage extends StatelessWidget {
           bottomNavigationBar: Container(
             padding: const EdgeInsets.all(16),
             color: AppColor.backgroundDark1,
-            child: AuthWidget(
-              label: 'Đọc ngay (Chương 1)',
-              color: AppColor.backgroundDark1,
-              textColor: Colors.white,
-              onPress: () {
-                if (controller.chapters.isNotEmpty) {
-                  final firstChapterId = controller.chapters.first.id;
-                  print("Đọc chương ID: $firstChapterId");
-                  Get.toNamed(
-                    AppRoutes.chapter,
-                    arguments: {
-                      'id': firstChapterId,
-                      'storyName': comicDetail.name,
-                    },
-                  );
-                } else {
-                  Get.snackbar('Thông báo', 'Chưa có chương nào để đọc');
-                }
-              },
-            ),
+            child: Obx(() {
+              final history = controller.userReadingHistory.value;
+              final hasHistory =
+                  history != null && history.currentChapterId != null;
+
+              return AuthWidget(
+                label: hasHistory
+                    ? 'Đọc tiếp (Chương ${history.currentChapterNumber ?? ""})'
+                    : 'Đọc ngay (Chương 1)',
+                color: AppColor.backgroundDark1,
+                textColor: Colors.white,
+                onPress: () {
+                  if (hasHistory) {
+                    print("Đọc tiếp chương ID: ${history.currentChapterId}");
+                    Get.toNamed(
+                      AppRoutes.chapter,
+                      arguments: {
+                        'id': history.currentChapterId,
+                        'storyName': comicDetail.name,
+                      },
+                    );
+                  } else {
+                    if (controller.chapters.isNotEmpty) {
+                      final firstChapterId = controller.chapters.first.id;
+                      print("Đọc chương ID: $firstChapterId");
+                      Get.toNamed(
+                        AppRoutes.chapter,
+                        arguments: {
+                          'id': firstChapterId,
+                          'storyName': comicDetail.name,
+                        },
+                      );
+                    } else {
+                      Get.snackbar('Thông báo', 'Chưa có chương nào để đọc');
+                    }
+                  }
+                },
+              );
+            }),
           ),
         );
       },
@@ -324,17 +340,20 @@ class ComicDetailPage extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          if (chapter.isLock == 1)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4),
-                              child: Text(
-                                'Giá: ${chapter.price} xu',
-                                style: const TextStyle(
-                                  color: Colors.amber,
-                                  fontSize: 12,
-                                ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Text(
+                              chapter.isLock == 1
+                                  ? 'Giá: ${chapter.price} xu'
+                                  : 'Miễn phí',
+                              style: TextStyle(
+                                color: chapter.isLock == 1
+                                    ? Colors.amber
+                                    : Colors.grey[500],
+                                fontSize: 12,
                               ),
                             ),
+                          ),
                         ],
                       ),
                     ),
@@ -419,7 +438,12 @@ class ComicDetailPage extends StatelessWidget {
 
           const Text('Thể loại', style: AppStyle.s14w600),
           const SizedBox(height: 8),
-          Text('   Tiểu thuyết'),
+          Text(
+            comicDetail.categories.isNotEmpty
+                ? comicDetail.categories.join(', ')
+                : 'Đang cập nhật',
+            style: const TextStyle(color: Colors.white70),
+          ),
 
           const SizedBox(height: 8),
           const Divider(height: 30, thickness: 1, color: Colors.white10),

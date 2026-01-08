@@ -11,14 +11,14 @@ import 'package:pho_truyen/features/story/presentation/controllers/library_contr
 class FilterHastagsController extends GetxController {
   final GetStoryTagsUseCase _getStoryTagsUseCase = GetStoryTagsUseCase(
     repository: ComicRepositoryImpl(
-      remoteDataSource: ComicRemoteDataSourceImpl(),
+      remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
     ),
   );
 
   final GetFilterSettingsUseCase _getFilterSettingsUseCase =
       GetFilterSettingsUseCase(
         repository: ComicRepositoryImpl(
-          remoteDataSource: ComicRemoteDataSourceImpl(),
+          remoteDataSource: ComicRemoteDataSourceImpl(dioClient: Get.find()),
         ),
       );
 
@@ -30,12 +30,14 @@ class FilterHastagsController extends GetxController {
   final RxList<String> chapters = <String>['Tất cả'].obs;
   final RxList<String> updateTimes = <String>['Tất cả'].obs;
   final RxList<String> tags = <String>['Tất cả'].obs;
+  final RxList<SortOption> sortOptions = <SortOption>[].obs;
 
   // Maps to store values for API
   final Map<String, String?> _genreValues = {'Tất cả': null};
   final Map<String, String?> _statusValues = {'Tất cả': null};
   final Map<String, String?> _chapterValues = {'Tất cả': null};
   final Map<String, String?> _timeValues = {'Tất cả': null};
+  final Map<String, String?> _tagValues = {'Tất cả': null};
 
   @override
   void onInit() {
@@ -47,8 +49,17 @@ class FilterHastagsController extends GetxController {
   Future<void> fetchTags() async {
     try {
       final result = await _getStoryTagsUseCase();
+
+      // Populate tag values map
+      _tagValues.clear();
+      _tagValues['Tất cả'] = null;
+      for (var tag in result) {
+        _tagValues[tag.name] = tag.id.toString();
+      }
+
       final tagNames = result.map((e) => e.name).toList();
       tags.assignAll(['Tất cả', ...tagNames]);
+      _syncWithLibraryState();
     } catch (e) {
       print('Error fetching tags: $e');
     }
@@ -69,8 +80,68 @@ class FilterHastagsController extends GetxController {
           _populateFilter(updateTimes, _timeValues, group.data);
         }
       }
+
+      sortOptions.assignAll(settings.sort);
+      _syncWithLibraryState();
     } catch (e) {
       print('Error fetching filter settings: $e');
+    }
+  }
+
+  void _syncWithLibraryState() {
+    if (Get.isRegistered<LibraryController>()) {
+      final libraryController = Get.find<LibraryController>();
+
+      // Sync Genre
+      if (libraryController.currentCategoryId != null) {
+        final key = _genreValues.keys.firstWhere(
+          (k) => _genreValues[k] == libraryController.currentCategoryId,
+          orElse: () => 'Tất cả',
+        );
+        selectedGenre.value = key;
+      }
+
+      // Sync Status
+      if (libraryController.currentState != null) {
+        final key = _statusValues.keys.firstWhere(
+          (k) => _statusValues[k] == libraryController.currentState,
+          orElse: () => 'Tất cả',
+        );
+        selectedStatus.value = key;
+      }
+
+      // Sync Chapter
+      if (libraryController.currentChapterMin != null &&
+          libraryController.currentChapterMax != null) {
+        final combinedValue =
+            '${libraryController.currentChapterMin}_${libraryController.currentChapterMax}';
+        final key = _chapterValues.keys.firstWhere(
+          (k) => _chapterValues[k] == combinedValue,
+          orElse: () => 'Tất cả',
+        );
+        selectedChapter.value = key;
+      }
+
+      // Sync Time Update
+      if (libraryController.currentTimeUpdate != null) {
+        final key = _timeValues.keys.firstWhere(
+          (k) => _timeValues[k] == libraryController.currentTimeUpdate,
+          orElse: () => 'Tất cả',
+        );
+        selectedTime.value = key;
+      }
+
+      // Sync Tags
+      if (libraryController.currentTag != null) {
+        final key = _tagValues.keys.firstWhere(
+          (k) => _tagValues[k] == libraryController.currentTag,
+          orElse: () => 'Tất cả',
+        );
+        // Only set if key exists in current tags list (though it should since _tagValues is built from fetchTags)
+        if (tags.contains(key)) {
+          selectedTag.value = key;
+        }
+      }
     }
   }
 
@@ -128,15 +199,13 @@ class FilterHastagsController extends GetxController {
     final statusValue = _statusValues[selectedStatus.value];
     final chapterValue = _chapterValues[selectedChapter.value];
     final timeValue = _timeValues[selectedTime.value];
-    final tagValue = selectedTag.value == 'Tất cả'
-        ? null
-        : selectedTag.value; // Assuming tag name is value for now, or need map
+    final tagValue = _tagValues[selectedTag.value];
 
     print("• Thể loại: ${selectedGenre.value} (Value: $genreValue)");
     print("• Trạng thái: ${selectedStatus.value} (Value: $statusValue)");
     print("• Số chương: ${selectedChapter.value} (Value: $chapterValue)");
     print("• Thời gian: ${selectedTime.value} (Value: $timeValue)");
-    print("• Tags: ${selectedTag.value}");
+    print("• Tags: ${selectedTag.value} (Value: $tagValue)");
     print("--------------------------------");
 
     // Parse chapter min/max from value string (e.g., "0_200", "2000_10000000")

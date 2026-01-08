@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:forui/forui.dart';
 import 'package:get/get.dart';
 import 'package:pho_truyen/core/constants/app_paths.dart';
@@ -7,13 +8,28 @@ import 'package:pho_truyen/core/constants/app_color.dart';
 import 'package:pho_truyen/features/dashboard/presentation/controllers/main_app_controller.dart';
 import 'package:pho_truyen/features/dashboard/presentation/bindings/main_app_binding.dart';
 import 'package:pho_truyen/features/dashboard/presentation/pages/main_app_page.dart';
+import 'package:pho_truyen/firebase_options.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import 'package:firebase_core/firebase_core.dart';
+import 'package:pho_truyen/core/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); //firebase
+  try {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
+  } catch (e) {
+    if (e.toString().contains('duplicate-app')) {
+      // Ignore this error as it happens during hot restart
+      debugPrint('Firebase already initialized: $e');
+    } else {
+      rethrow;
+    }
+  }
+  NotificationService().init();
   runApp(const MyApp());
 }
 

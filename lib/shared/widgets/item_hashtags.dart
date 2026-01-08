@@ -11,11 +11,7 @@ class ItemHashtags extends StatelessWidget {
   Widget build(BuildContext context) {
     String displayName = tag;
     Color baseColor = Colors.teal.shade500;
-
-    // Regex to parse "{name: Vip, color: 1976d2}"
-    final RegExp regex = RegExp(
-      r'\{name:\s*([^,]+),\s*color:\s*([0-9a-fA-F]+)\}',
-    );
+    final RegExp regex = RegExp(r'name:\s*([^,]+),\s*color:\s*([0-9a-fA-F]+)');
     final Match? match = regex.firstMatch(tag);
 
     if (match != null) {

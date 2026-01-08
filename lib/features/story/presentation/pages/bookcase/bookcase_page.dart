@@ -77,6 +77,24 @@ class _BookcasePageState extends State<BookcasePage>
                       if (items.isEmpty) {
                         return const Center(child: Text("Chưa có truyện nào"));
                       }
+
+                      if (_isGridView) {
+                        final libraryItems = items.map((story) {
+                          return LibraryItem(
+                            id: story.id,
+                            title: story.name,
+                            chapters: '${story.chapterCount} chương',
+                            imageUrl:
+                                story.image ?? 'https://picsum.photos/100/150',
+                            tags: story.hashtags.map((e) => e.name).toList(),
+                          );
+                        }).toList();
+                        return _buildBookList(
+                          libraryItems,
+                          controller.fetchReadStories,
+                        );
+                      }
+
                       return RefreshIndicator(
                         onRefresh: controller.fetchReadStories,
                         child: ListView.builder(
@@ -161,7 +179,7 @@ class _BookcasePageState extends State<BookcasePage>
                         controller.fetchViewedStories,
                       );
                     }),
-                  ), // Đã xem
+                  ),
                 ],
               ),
             ),

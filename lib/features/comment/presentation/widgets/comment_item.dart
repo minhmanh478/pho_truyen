@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
 import 'package:pho_truyen/core/utils/date_time_extension.dart';
 import 'package:pho_truyen/shared/widgets/button/dialog_login.dart';
+import 'package:pho_truyen/features/users/presentation/widgets/info_user/info_user_avatar.dart';
 
 import '../../domain/entities/comment_entity.dart';
 
@@ -30,16 +31,10 @@ class CommentItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
+            InfoUserAvatar(
+              avatarUrl: comment.userAvatar,
+              isDarkMode: Theme.of(context).brightness == Brightness.dark,
               radius: 20,
-              backgroundColor: Colors.grey,
-              backgroundImage: NetworkImage(
-                'https://ui-avatars.com/api/?name=${comment.userName}',
-              ),
-              foregroundImage: comment.userAvatar != null
-                  ? NetworkImage(comment.userAvatar!)
-                  : null,
-              onForegroundImageError: (_, __) {},
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -79,7 +74,7 @@ class CommentItem extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 6, left: 16),
+                    padding: const EdgeInsets.only(top: 6, left: 8),
                     child: Row(
                       children: [
                         Text(

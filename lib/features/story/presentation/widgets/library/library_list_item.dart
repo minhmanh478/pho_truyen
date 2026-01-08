@@ -49,7 +49,7 @@ class LibraryListItem extends StatelessWidget {
               child: Image.network(
                 item.imageUrl,
                 width: 80,
-                height: 110,
+                height: 120,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) =>
                     Container(width: 80, height: 110, color: Colors.grey),

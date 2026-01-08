@@ -34,6 +34,10 @@ class InfoUserForm extends StatelessWidget {
         ? Colors.grey.shade400
         : AppColor.slate600;
     final inputFillColor = isDarkMode ? Colors.grey.shade800 : AppColor.gray100;
+    final Color? borderColor = isDarkMode ? Colors.white24 : null;
+    final Color effectiveFillColor = isDarkMode
+        ? Colors.transparent
+        : inputFillColor;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +48,8 @@ class InfoUserForm extends StatelessWidget {
         CustomTextField(
           controller: fullNameController,
           hintText: "Nhập họ và tên",
-          fillColor: inputFillColor,
+          fillColor: effectiveFillColor,
+          borderColor: borderColor,
           textColor: textColor,
         ),
         const SizedBox(height: 16),
@@ -59,7 +64,8 @@ class InfoUserForm extends StatelessWidget {
               controller: birthdayController,
               hintText: "Chọn ngày sinh",
               suffixIcon: Icons.calendar_today,
-              fillColor: inputFillColor,
+              fillColor: effectiveFillColor,
+              borderColor: borderColor,
               textColor: textColor,
             ),
           ),
@@ -84,8 +90,9 @@ class InfoUserForm extends StatelessWidget {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: inputFillColor,
+            color: effectiveFillColor,
             borderRadius: BorderRadius.circular(8),
+            border: borderColor != null ? Border.all(color: borderColor) : null,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
@@ -122,8 +129,9 @@ class InfoUserForm extends StatelessWidget {
         CustomTextField(
           controller: phoneController,
           enabled: false,
-          fillColor: isDarkMode ? Colors.grey.shade900 : Colors.grey.shade300,
-          textColor: textColor,
+          fillColor: isDarkMode ? Colors.white10 : Colors.grey.shade300,
+          borderColor: borderColor,
+          textColor: secondaryTextColor,
         ),
         const SizedBox(height: 16),
 
@@ -133,8 +141,9 @@ class InfoUserForm extends StatelessWidget {
         CustomTextField(
           controller: emailController,
           enabled: false,
-          fillColor: isDarkMode ? Colors.grey.shade900 : Colors.grey.shade300,
-          textColor: textColor,
+          fillColor: isDarkMode ? Colors.white10 : Colors.grey.shade300,
+          borderColor: borderColor,
+          textColor: secondaryTextColor,
         ),
       ],
     );

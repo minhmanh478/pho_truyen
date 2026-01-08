@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
+import 'package:pho_truyen/core/utils/app_dialogs.dart';
 import 'package:pho_truyen/features/users/presentation/controllers/account/user_controller.dart';
 import 'package:pho_truyen/features/users/presentation/widgets/info_user/change_password_dialog.dart';
 import 'package:pho_truyen/features/users/presentation/widgets/info_user/info_user_actions.dart';
 import 'package:pho_truyen/features/users/presentation/widgets/info_user/info_user_avatar.dart';
 import 'package:pho_truyen/features/users/presentation/widgets/info_user/info_user_form.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class InfoUserPage extends StatefulWidget {
   const InfoUserPage({super.key});
@@ -57,6 +60,8 @@ class _InfoUserPageState extends State<InfoUserPage> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -65,11 +70,21 @@ class _InfoUserPageState extends State<InfoUserPage> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: AppColor.primary,
-              onPrimary: Colors.white,
-              onSurface: AppColor.blackPrimary,
-            ),
+            colorScheme: isDarkMode
+                ? ColorScheme.dark(
+                    primary: AppColor.primary,
+                    onPrimary: Colors.white,
+                    surface: AppColor.cardColor,
+                    onSurface: Colors.white,
+                  )
+                : const ColorScheme.light(
+                    primary: AppColor.primary,
+                    onPrimary: Colors.white,
+                    onSurface: AppColor.blackPrimary,
+                  ),
+            dialogBackgroundColor: isDarkMode
+                ? AppColor.cardColor
+                : Colors.white,
           ),
           child: child!,
         );
@@ -79,6 +94,27 @@ class _InfoUserPageState extends State<InfoUserPage> {
       setState(() {
         _birthdayController.text = DateFormat('dd/MM/yyyy').format(picked);
       });
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      Get.dialog(
+        const Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
+
+      final url = await controller.uploadAvatar(File(image.path));
+      Get.back(); // Close loading dialog
+
+      if (url != null) {
+        setState(() {
+          _avatarUrl = url;
+        });
+      }
     }
   }
 
@@ -104,10 +140,7 @@ class _InfoUserPageState extends State<InfoUserPage> {
   }
 
   void _showChangePasswordDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => const ChangePasswordDialog(),
-    );
+    AppDialogs.showCustomDialog(content: const ChangePasswordDialog());
   }
 
   @override
@@ -142,8 +175,7 @@ class _InfoUserPageState extends State<InfoUserPage> {
               isDarkMode: isDarkMode,
               showEditIcon: true,
               onCameraTap: () {
-                // TODO: Implement image picker
-                Get.snackbar("Thông báo", "Chức năng đang phát triển");
+                _pickImage();
               },
             ),
             const SizedBox(height: 24),

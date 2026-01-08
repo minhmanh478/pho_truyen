@@ -170,13 +170,61 @@ class ChapterSettingsBottomSheet extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              _buildWeightOption('ExtraLight', FontWeight.w200, controller),
-              const SizedBox(width: 12),
               _buildWeightOption('Light', FontWeight.w300, controller),
               const SizedBox(width: 12),
               _buildWeightOption('Normal', FontWeight.normal, controller),
+              const SizedBox(width: 12),
+              _buildWeightOption('Medium', FontWeight.w500, controller),
             ],
           ),
+          const SizedBox(height: 12),
+
+          // 4. Tự động cuộn
+          const Divider(color: Colors.white24, height: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Tự động cuộn',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+              Obx(
+                () => Switch(
+                  value: controller.isAutoScroll.value,
+                  onChanged: controller.toggleAutoScroll,
+                  activeColor: AppColor.primaryColor,
+                  activeTrackColor: AppColor.primaryColor.withOpacity(0.5),
+                ),
+              ),
+            ],
+          ),
+          Obx(() {
+            if (controller.isAutoScroll.value) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  Text(
+                    'Tốc độ: ${controller.scrollSpeed.value.toInt()}',
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  Slider(
+                    value: controller.scrollSpeed.value,
+                    min: 0.5,
+                    max: 10.0,
+                    divisions: 9,
+                    activeColor: AppColor.primaryColor,
+                    onChanged: controller.updateScrollSpeed,
+                  ),
+                ],
+              );
+            }
+            return const SizedBox();
+          }),
           const SizedBox(height: 30),
         ],
       ),
@@ -218,7 +266,19 @@ class ChapterSettingsBottomSheet extends StatelessWidget {
   Widget _buildFontOption(String font, ChapterController controller) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => controller.fontFamily.value = font,
+        onTap: () {
+          print('Selected Font Family: $font');
+
+          // Debug: Print font asset path from project
+          final Map<String, String> fontPaths = {
+            'Quicksand': 'Not in assets (System/Google Font)',
+            'Montserrat': 'Not in assets (System/Google Font)',
+            'Roboto': 'Not in assets (System/Google Font)',
+          };
+          print('Selected Font Path: ${fontPaths[font] ?? 'Unknown path'}');
+
+          controller.fontFamily.value = font;
+        },
         child: Obx(() {
           final isSelected = controller.fontFamily.value == font;
           return Container(
@@ -253,7 +313,10 @@ class ChapterSettingsBottomSheet extends StatelessWidget {
   ) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => controller.fontWeight.value = weight,
+        onTap: () {
+          print('Selected Font Weight: $weight');
+          controller.fontWeight.value = weight;
+        },
         child: Obx(() {
           final isSelected = controller.fontWeight.value == weight;
           return Container(

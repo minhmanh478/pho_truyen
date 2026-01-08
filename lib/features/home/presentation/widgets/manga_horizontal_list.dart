@@ -82,16 +82,19 @@ class MangaHorizontalList extends StatelessWidget {
                     ),
                   ),
                   // Phần Tác giả
-                  Text(
-                    item.authorName ?? 'Unknown',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: secondaryTextColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
+                  if (item.authorName != null &&
+                      item.authorName!.isNotEmpty &&
+                      item.authorName != 'Unknown')
+                    Text(
+                      item.authorName!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: secondaryTextColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

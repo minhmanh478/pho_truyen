@@ -30,6 +30,7 @@ class ComicDetailModel {
   final int readCount;
   final int nominations;
   final List<String> genres;
+  final List<String> categories;
   final List<String> hashtags;
   final List<ChapterModel> chapters;
 
@@ -47,6 +48,7 @@ class ComicDetailModel {
     this.readCount = 0,
     this.nominations = 0,
     this.genres = const [],
+    this.categories = const [],
     this.hashtags = const [],
     this.chapters = const [],
   });
@@ -70,6 +72,11 @@ class ComicDetailModel {
       readCount: detail['read_count'] ?? 0,
       nominations: detail['nominations'] ?? 0,
       genres: listTag.map((e) => e['name'] as String).toList(),
+      categories:
+          (json['list_category'] as List?)
+              ?.map((e) => e['name'] as String)
+              .toList() ??
+          [],
       hashtags:
           (detail['hashtags'] as List?)
               ?.map((e) => e['name'] as String)

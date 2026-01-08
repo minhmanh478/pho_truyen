@@ -12,7 +12,10 @@ class AuthModel extends AuthEntity {
 
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     return AuthModel(
-      user: UserModel.fromJson(json['user']),
+      // Check if 'user' key exists, otherwise try to parse the json itself as UserModel
+      user: json['user'] != null
+          ? UserModel.fromJson(json['user'])
+          : UserModel.fromJson(json),
       token: json['access_token'] ?? '',
       refreshToken: json['refresh_token'],
     );

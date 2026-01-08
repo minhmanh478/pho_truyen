@@ -10,6 +10,8 @@ import 'package:pho_truyen/features/chapter/domain/usecases/get_chapter_detail_u
 import 'package:pho_truyen/features/chapter/domain/usecases/buy_chapter_usecase.dart';
 import 'package:pho_truyen/features/story/data/models/comic_model.dart';
 import 'package:pho_truyen/features/story/presentation/controllers/comic/comic_detail_controller.dart';
+import 'package:pho_truyen/features/users/presentation/controllers/account/user_controller.dart';
+import 'package:pho_truyen/shared/widgets/dialog/affiliate_ad_dialog.dart';
 
 class ChapterController extends GetxController {
   late final GetChapterDetailUseCase _getChapterDetailUseCase;
@@ -33,6 +35,12 @@ class ChapterController extends GetxController {
   final Rx<FontWeight> fontWeight = FontWeight.normal.obs;
   final Rx<Color> backgroundColor = const Color(0xFF1A1A1A).obs;
   final Rx<Color> textColor = Colors.white.obs;
+
+  // Auto Scroll State
+  final ScrollController scrollController = ScrollController();
+  final RxBool isAutoScroll = false.obs;
+  final RxDouble scrollSpeed = 0.5.obs; // 0.5 to 10
+  Timer? _scrollTimer;
 
   @override
   void onInit() {
@@ -62,11 +70,43 @@ class ChapterController extends GetxController {
 
     // Start auto-hide timer
     _resetHideTimer();
+
+    // Check and show ad
+    _checkAndShowAd();
+  }
+
+  void _checkAndShowAd() {
+    // Wait a bit for UI to settle
+    Future.delayed(const Duration(seconds: 1), () {
+      if (Get.isRegistered<UserController>()) {
+        final userController = Get.find<UserController>();
+        final userProfile = userController.userProfile.value;
+
+        // Logic: Show ad if NO VIP active
+        // If userProfile is null (not loaded yet) or vip list is empty -> Show Ad
+        // You might want to ensure profile is loaded first?
+        // Assuming profile is loaded in Splash/Home or userController preserves state.
+
+        bool isVip = false;
+        if (userProfile != null && userProfile.vip.isNotEmpty) {
+          // Check if any VIP package is still valid (expiry date > now) if needed
+          // For simple logic: if list not empty = isVip
+          isVip = true;
+        }
+
+        if (!isVip && !userController.hasShownAffiliateAd) {
+          userController.hasShownAffiliateAd = true;
+          Get.dialog(const AffiliateAdDialog(), barrierDismissible: false);
+        }
+      }
+    });
   }
 
   @override
   void onClose() {
     _hideTimer?.cancel();
+    stopAutoScroll();
+    scrollController.dispose();
     super.onClose();
   }
 
@@ -91,6 +131,72 @@ class ChapterController extends GetxController {
     });
   }
 
+  // Auto Scroll Logic
+  void toggleAutoScroll(bool value) {
+    isAutoScroll.value = value;
+    if (value) {
+      startAutoScroll();
+      showControls.value = false; //Ẩn các điều khiển khi bắt đầu cuộn
+    } else {
+      stopAutoScroll();
+    }
+  }
+
+  void updateScrollSpeed(double value) {
+    scrollSpeed.value = value;
+    // Nếu đang chạy, hãy khởi động lại để áp dụng tốc độ mới một cách hiệu quả nếu chúng ta dựa vào thời lượng hẹn giờ
+    // Nhưng chúng tôi dựa vào pixel trên mỗi tick, vì vậy chỉ cần cập nhật giá trị là đủ.
+  }
+
+  void startAutoScroll() {
+    _scrollTimer?.cancel();
+    // 60fps -> ~16ms. thời gian cụ thể cho độ mịn.
+    _scrollTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      if (!isAutoScroll.value) {
+        timer.cancel();
+        return;
+      }
+      if (scrollController.hasClients) {
+        final maxScroll = scrollController.position.maxScrollExtent;
+        final currentScroll = scrollController.offset;
+
+        final double delta = scrollSpeed.value * 1.5;
+
+        if (currentScroll < maxScroll) {
+          scrollController.jumpTo(currentScroll + delta);
+        } else {
+          // Đạt đến đáy
+          stopAutoScroll();
+          isAutoScroll.value = false;
+          // Optionally go to next chapter?
+          // nextChapter();
+        }
+      }
+    });
+  }
+
+  void stopAutoScroll() {
+    _scrollTimer?.cancel();
+  }
+
+  void onInteractionStart(PointerDownEvent event) {
+    if (isAutoScroll.value) {
+      stopAutoScroll();
+    }
+  }
+
+  void onInteractionEnd(PointerUpEvent event) {
+    if (isAutoScroll.value) {
+      startAutoScroll();
+    }
+  }
+
+  void onInteractionCancel(PointerCancelEvent event) {
+    if (isAutoScroll.value) {
+      startAutoScroll();
+    }
+  }
+
   Future<void> fetchChapterDetail(int id) async {
     currentChapterId.value = id;
     isLoading.value = true;
@@ -101,20 +207,14 @@ class ChapterController extends GetxController {
           response.data?.detail != null) {
         chapterDetail.value = response.data!.detail;
 
-        // Notify ComicDetailController that this chapter is read
         if (Get.isRegistered<ComicDetailController>()) {
           Get.find<ComicDetailController>().markChapterAsRead(id);
         }
 
-        // Fetch chapter list if not already loaded or if storyId changed
         if (chapters.isEmpty ||
             (chapters.isNotEmpty &&
                 chapterDetail.value != null &&
                 chapters.first.id != id)) {
-          // Note: checking chapters.first.id != id is weak, ideally check storyId.
-          // But we can just fetch chapters every time or check if storyId matches.
-          // Since we don't store storyId separately, let's just fetch.
-          // Actually, chapterDetail has storyId.
           fetchChapters(chapterDetail.value!.storyId);
         }
       } else {
@@ -132,7 +232,6 @@ class ChapterController extends GetxController {
       final response = await _chapterRepository.getChapters(storyId);
       if (response.code == 'SUCCESS' || response.code == 'success') {
         chapters.assignAll(response.data);
-        // Sort chapters by chapterNumber ascending
         chapters.sort((a, b) => a.chapterNumber.compareTo(b.chapterNumber));
       }
     } catch (e) {
