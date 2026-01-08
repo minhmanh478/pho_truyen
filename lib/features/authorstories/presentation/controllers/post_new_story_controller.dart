@@ -31,7 +31,7 @@ class PostNewStoryController extends GetxController {
 
   // Selected values
   final RxString selectedCategory = ''.obs;
-  final RxList<String> selectedTags = <String>[].obs; // List of tag IDs
+  final RxList<String> selectedTags = <String>[].obs;
   final RxString selectedImagePath = ''.obs;
   final RxString uploadedImageUrl = ''.obs;
 
@@ -42,8 +42,8 @@ class PostNewStoryController extends GetxController {
 
   // Maps for IDs
   final Map<String, String> _categoryMap = {}; // Name -> ID
-  final Map<String, String> _tagMap = {}; // Name -> ID
-  final Map<String, String> _tagIdToNameMap = {}; // ID -> Name
+  final Map<String, String> _tagMap = {};
+  final Map<String, String> _tagIdToNameMap = {};
 
   @override
   void onInit() {
@@ -89,7 +89,6 @@ class PostNewStoryController extends GetxController {
     _categoryMap.clear();
     for (var option in options) {
       categories.add(option.title);
-      // Assuming value is ID, but API might return string ID
       if (option.value != null) {
         _categoryMap[option.title] = option.value!;
       }
@@ -131,14 +130,7 @@ class PostNewStoryController extends GetxController {
     }
   }
 
-  Future<void> pickImage() async {
-    // Logic moved to View to keep Controller cleaner from UI dependencies like context if needed,
-    // or to avoid adding ImagePicker dependency here if I wanted to keep it pure.
-    // But commonly Controller handles this.
-    // However, I implemented it in the View:
-    // onTap: () async { final ImagePicker picker = ImagePicker(); ... }
-    // So this method is unused or can be removed.
-  }
+  Future<void> pickImage() async {}
 
   Future<void> uploadImage(File file) async {
     isLoading.value = true;

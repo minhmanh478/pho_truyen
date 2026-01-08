@@ -69,7 +69,7 @@ class YourStoryDetailPage extends GetView<YourStoryDetailController> {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1E293B), // Dark slate color
+                    color: const Color(0xFF1E293B),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: ListTile(

@@ -35,7 +35,6 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
                 final item = widget.data[index];
                 return GestureDetector(
                   onTap: () {
-                    // Navigate to ComicDetailPage with objectId
                     Get.to(
                       () => const ComicDetailPage(),
                       arguments: item.objectId,

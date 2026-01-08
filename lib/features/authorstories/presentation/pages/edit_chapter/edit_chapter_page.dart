@@ -99,8 +99,7 @@ class EditChapterPage extends GetView<EditChapterController> {
                       ? null
                       : controller.updateChapter,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColor
-                        .primary, // Use primary color for better visibility
+                    backgroundColor: AppColor.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

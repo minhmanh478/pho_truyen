@@ -22,9 +22,7 @@ class FilterHastagsController extends GetxController {
         ),
       );
 
-  // --------------------------------------------------------
   // DATA SOURCE (Dữ liệu tĩnh -> Động)
-  // --------------------------------------------------------
   final RxList<String> genres = <String>['Tất cả'].obs;
   final RxList<String> status = <String>['Tất cả'].obs;
   final RxList<String> chapters = <String>['Tất cả'].obs;
@@ -137,7 +135,7 @@ class FilterHastagsController extends GetxController {
           (k) => _tagValues[k] == libraryController.currentTag,
           orElse: () => 'Tất cả',
         );
-        // Only set if key exists in current tags list (though it should since _tagValues is built from fetchTags)
+        // Chỉ set nếu key tồn tại trong danh sách tags hiện tại (thậm chí nó nên vì _tagValues được xây dựng từ fetchTags)
         if (tags.contains(key)) {
           selectedTag.value = key;
         }
@@ -208,7 +206,7 @@ class FilterHastagsController extends GetxController {
     print("• Tags: ${selectedTag.value} (Value: $tagValue)");
     print("--------------------------------");
 
-    // Parse chapter min/max from value string (e.g., "0_200", "2000_10000000")
+    // Phân tích cú pháp chương tối thiểu/tối đa từ chuỗi giá trị (ví dụ: "0_200", "2000_10000000")
     String? chapterMin;
     String? chapterMax;
     if (chapterValue != null && chapterValue.contains('_')) {

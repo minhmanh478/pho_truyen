@@ -56,7 +56,7 @@ class CommentProfile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Tên user (Đã gán biến name)
+                        // Tên user
                         Text(
                           name,
                           style: const TextStyle(
@@ -67,7 +67,7 @@ class CommentProfile extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
 
-                        // Nội dung comment (Đã gán biến comment)
+                        // Nội dung comment
                         Text(
                           comment,
                           style: const TextStyle(

@@ -64,7 +64,7 @@ class SortBottomSheet extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                // Nút đóng (X)
+                // Nút đóng
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
                   child: Container(

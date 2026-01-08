@@ -94,7 +94,6 @@ class YourStoryDetailController extends GetxController
     final result = await getAuthorChaptersUseCase(storyId);
     result.fold(
       (failure) {
-        // Handle error silently or show toast?
         print('Error fetching chapters: ${failure.message}');
       },
       (data) {
@@ -104,7 +103,6 @@ class YourStoryDetailController extends GetxController
     isChaptersLoading.value = false;
   }
 
-  // Define onButtonAction once
   void onButtonAction(String code) {
     switch (code) {
       case 'create_chapter':
@@ -199,7 +197,6 @@ class YourStoryDetailController extends GetxController
         Get.snackbar('Lỗi', failure.message);
       },
       (success) async {
-        // Optionally refresh detail to reflect status change
         Get.snackbar('Thành công', 'Cập nhật trạng thái thành công');
         await fetchStoryDetail(userStory.value!.id);
       },

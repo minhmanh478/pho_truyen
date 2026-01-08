@@ -13,7 +13,6 @@ class EditStoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Controller is injected via Binding
     final controller = Get.find<EditStoryController>();
 
     final isDarkMode = AppColor.isDarkMode(context);

@@ -39,7 +39,7 @@ class ChapterController extends GetxController {
   // Auto Scroll State
   final ScrollController scrollController = ScrollController();
   final RxBool isAutoScroll = false.obs;
-  final RxDouble scrollSpeed = 0.5.obs; // 0.5 to 10
+  final RxDouble scrollSpeed = 0.5.obs;
   Timer? _scrollTimer;
 
   @override
@@ -67,33 +67,19 @@ class ChapterController extends GetxController {
       errorMessage.value = "Invalid ID";
       isLoading.value = false;
     }
-
-    // Start auto-hide timer
     _resetHideTimer();
-
-    // Check and show ad
     _checkAndShowAd();
   }
 
   void _checkAndShowAd() {
-    // Wait a bit for UI to settle
     Future.delayed(const Duration(seconds: 1), () {
       if (Get.isRegistered<UserController>()) {
         final userController = Get.find<UserController>();
         final userProfile = userController.userProfile.value;
-
-        // Logic: Show ad if NO VIP active
-        // If userProfile is null (not loaded yet) or vip list is empty -> Show Ad
-        // You might want to ensure profile is loaded first?
-        // Assuming profile is loaded in Splash/Home or userController preserves state.
-
         bool isVip = false;
         if (userProfile != null && userProfile.vip.isNotEmpty) {
-          // Check if any VIP package is still valid (expiry date > now) if needed
-          // For simple logic: if list not empty = isVip
           isVip = true;
         }
-
         if (!isVip && !userController.hasShownAffiliateAd) {
           userController.hasShownAffiliateAd = true;
           Get.dialog(const AffiliateAdDialog(), barrierDismissible: false);
@@ -144,13 +130,10 @@ class ChapterController extends GetxController {
 
   void updateScrollSpeed(double value) {
     scrollSpeed.value = value;
-    // Nếu đang chạy, hãy khởi động lại để áp dụng tốc độ mới một cách hiệu quả nếu chúng ta dựa vào thời lượng hẹn giờ
-    // Nhưng chúng tôi dựa vào pixel trên mỗi tick, vì vậy chỉ cần cập nhật giá trị là đủ.
   }
 
   void startAutoScroll() {
     _scrollTimer?.cancel();
-    // 60fps -> ~16ms. thời gian cụ thể cho độ mịn.
     _scrollTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
       if (!isAutoScroll.value) {
         timer.cancel();
@@ -165,11 +148,8 @@ class ChapterController extends GetxController {
         if (currentScroll < maxScroll) {
           scrollController.jumpTo(currentScroll + delta);
         } else {
-          // Đạt đến đáy
           stopAutoScroll();
           isAutoScroll.value = false;
-          // Optionally go to next chapter?
-          // nextChapter();
         }
       }
     });

@@ -42,7 +42,6 @@ class MainAppBinding extends Bindings {
       ),
     );
 
-    // Auth Dependencies for Token Refresh
     Get.lazyPut<LoginRemoteDataSource>(
       () => LoginRemoteDataSourceImpl(dioClient: Get.find<DioClient>()),
     );

@@ -52,7 +52,6 @@ class TopUnlockWidget extends StatelessWidget {
     final secondaryTextColor = isDarkMode
         ? Colors.white70
         : const Color(0xFF546E7A);
-    // Màu đường kẻ và viền
     final dividerColor = isDarkMode ? Colors.white10 : const Color(0xFFF1F2F6);
     final borderColor = isDarkMode ? Colors.transparent : Colors.grey.shade100;
 

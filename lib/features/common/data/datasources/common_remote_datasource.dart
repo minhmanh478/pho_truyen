@@ -73,7 +73,6 @@ class CommonRemoteDataSourceImpl implements CommonRemoteDataSource {
       final data = e.response!.data;
       if (data is Map<String, dynamic>) {
         try {
-          // Cố gắng parse theo cấu trúc BaseResponse
           final baseResponse = BaseResponse<dynamic>.fromJson(
             data,
             (json) => json,

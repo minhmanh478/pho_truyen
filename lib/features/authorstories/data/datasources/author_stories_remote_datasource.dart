@@ -282,8 +282,6 @@ class AuthorStoriesRemoteDataSourceImpl
         } else if (mapData.containsKey('data') && mapData['data'] is List) {
           listData = mapData['data'];
         } else {
-          // Try to find any list value? or just default empty
-          // For now assume 'items' is the standard
           listData = mapData['items'] as List? ?? [];
         }
       }

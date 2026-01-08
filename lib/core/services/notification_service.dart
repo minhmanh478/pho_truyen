@@ -8,7 +8,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:pho_truyen/core/router/app_routes.dart';
 
-// Top-level function for handling background messages
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
@@ -29,11 +28,7 @@ class NotificationService {
 
   Future<void> init() async {
     if (_isInitialized) return;
-
-    // 1. Request Permission
     await _requestPermission();
-
-    // 2. Initialize Local Notifications
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -58,8 +53,6 @@ class NotificationService {
         }
       },
     );
-
-    // 3. Setup Firebase Messaging
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -76,15 +69,12 @@ class NotificationService {
       print('A new onMessageOpenedApp event was published!');
       _handleMessage(message);
     });
-
-    // Check if app was opened from a terminated state
     final RemoteMessage? initialMessage = await _firebaseMessaging
         .getInitialMessage();
     if (initialMessage != null) {
       _handleMessage(initialMessage);
     }
 
-    // Get token in background without blocking init
     _getToken();
 
     _isInitialized = true;
@@ -94,7 +84,6 @@ class NotificationService {
   Future<void> _getToken() async {
     if (Platform.isIOS) {
       String? apnsToken;
-      // Retry 3 times to get APNS token
       for (int i = 0; i < 3; i++) {
         apnsToken = await _firebaseMessaging.getAPNSToken();
         if (apnsToken != null) break;
@@ -133,12 +122,10 @@ class NotificationService {
   void _handleMessage(RemoteMessage message) {
     if (message.data.containsKey('route')) {
       final route = message.data['route'];
-      // Basic navigation logic
       if (route != null) {
         Get.toNamed(route);
       }
     } else {
-      // Default navigation to notification screen
       Get.toNamed(AppRoutes.notification);
     }
   }

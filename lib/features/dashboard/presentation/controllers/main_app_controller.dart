@@ -55,7 +55,6 @@ class MainAppController extends GetxController {
             },
           );
         } else {
-          // Dự phòng nếu không tìm thấy UseCase (sẽ không xảy ra nếu liên kết là chính xác)
           final token = await TokenService().getToken();
           isLoggedIn.value = token != null && token.isNotEmpty;
         }
@@ -68,7 +67,6 @@ class MainAppController extends GetxController {
       print("CheckLoginStatus Error: $e");
       isLoggedIn.value = false;
     } finally {
-      // Fetch Home Data before initializing
       await _fetchHomeData();
       isInitialized.value = true;
     }

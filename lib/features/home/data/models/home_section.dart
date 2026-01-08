@@ -44,13 +44,10 @@ class HomeSection {
       } else if (typeStr == 'BANNER_IMAGE') {
         imageUrl = rawData as String;
       } else if (typeStr == 'TOP') {
-        // Đệ quy: TOP chứa danh sách các HomeSection con
         subSections = (rawData as List)
             .map((x) => HomeSection.fromJson(x))
             .toList();
       } else if (rawData is List) {
-        // Các trường hợp còn lại (STORY_PROPOSAL, STORY_SHORT, STORY_NGUOC...)
-        // được coi là danh sách truyện
         stories = rawData.map((x) => StoryModel.fromJson(x)).toList();
       }
     }
@@ -81,7 +78,6 @@ class HomeSection {
     if (stories != null && stories!.isNotEmpty) {
       return HomeSectionType.storyList;
     }
-    // Các loại story list rỗng hoặc type lạ
     if (type.startsWith('STORY') || type == 'TEST123') {
       return HomeSectionType.storyList;
     }

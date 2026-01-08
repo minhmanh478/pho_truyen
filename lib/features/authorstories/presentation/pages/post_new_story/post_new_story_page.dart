@@ -13,7 +13,6 @@ class PostNewStoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Controller is now injected via Binding
     final controller = Get.find<PostNewStoryController>();
 
     final isDarkMode = AppColor.isDarkMode(context);
@@ -106,7 +105,6 @@ class PostNewStoryPage extends StatelessWidget {
     );
   }
 
-  // Keeping ImagePicker specific widget here as it's small and depends on potential package import
   Widget _buildImagePicker(PostNewStoryController controller, bool isDarkMode) {
     return GestureDetector(
       onTap: () async {

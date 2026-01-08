@@ -23,7 +23,6 @@ void main() async {
     }
   } catch (e) {
     if (e.toString().contains('duplicate-app')) {
-      // Ignore this error as it happens during hot restart
       debugPrint('Firebase already initialized: $e');
     } else {
       rethrow;

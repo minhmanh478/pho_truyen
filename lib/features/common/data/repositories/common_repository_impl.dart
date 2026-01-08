@@ -34,7 +34,6 @@ class CommonRepositoryImpl implements CommonRepository {
           }
         }
       } catch (e) {
-        // Ignore compression error and try to upload original file
         print("Compression failed: $e");
       }
 

@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'token_service.dart';
 
 class DioClient {
-  // Singleton pattern (tùy chọn, nhưng khuyên dùng cho Dio)
   static final DioClient _instance = DioClient._internal();
   factory DioClient() => _instance;
 
@@ -35,16 +34,10 @@ class DioClient {
           return handler.next(options);
         },
         onError: (DioException error, handler) async {
-          // Xử lý lỗi 401 Unauthorized
           if (error.response?.statusCode == 401) {
             final RequestOptions requestOptions = error.requestOptions;
-
-            // Tránh lặp vô hạn nếu chính request refresh token bị lỗi
             if (requestOptions.path.contains('/api/auth/refresh')) {
-              // Refresh token cũng hết hạn hoặc không hợp lệ -> Logout
               await TokenService().removeToken();
-              // Có thể điều hướng về trang Login tại đây nếu cần
-              // Get.offAllNamed(AppRoutes.login);
               return handler.next(error);
             }
 
@@ -56,11 +49,8 @@ class DioClient {
                 return handler.next(error);
               }
 
-              print('🔄 Token expired. Refreshing...');
+              print('Token expired. Refreshing...');
 
-              // Gọi API Refresh Token
-              // Tạo một Dio instance mới để tránh interceptor lặp lại (hoặc dùng chính _dio nhưng cẩn thận)
-              // Ở đây dùng Dio mới để an toàn và sạch sẽ
               final refreshDio = Dio(
                 BaseOptions(
                   baseUrl: _dio.options.baseUrl,
@@ -82,7 +72,7 @@ class DioClient {
                 final newAccessToken = data['access_token'];
 
                 if (newAccessToken != null) {
-                  print('✅ Token refreshed successfully');
+                  print('Token refreshed successfully');
                   // Lưu token mới
                   await TokenService().saveToken(newAccessToken);
 
@@ -95,7 +85,7 @@ class DioClient {
                 }
               }
             } catch (e) {
-              print('❌ Refresh token failed: $e');
+              print('Refresh token failed: $e');
               await TokenService().removeToken();
             }
           }
