@@ -6,7 +6,8 @@ import 'package:pho_truyen/core/constants/app_style.dart';
 import 'package:pho_truyen/features/auth/presentation/controllers/login_controller.dart';
 import 'package:pho_truyen/features/auth/presentation/controllers/social_auth_controller.dart';
 
-import 'package:pho_truyen/core/router/app_routes.dart';
+import 'package:pho_truyen/features/auth/presentation/pages/account/forgot_password/forgot_password_page.dart';
+import 'package:pho_truyen/features/auth/presentation/pages/account/register/register_page.dart';
 import 'package:pho_truyen/shared/widgets/button/auth_widget.dart';
 import '../../widgets/auth_label.dart';
 import '../../widgets/auth_password_field.dart';
@@ -132,7 +133,7 @@ class LoginPage extends GetView<LoginController> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.forgotPassword);
+                      Get.to(() => const ForgotPasswordPage());
                     },
                     child: Text(
                       'Quên mật khẩu?',
@@ -237,7 +238,7 @@ class LoginPage extends GetView<LoginController> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(AppRoutes.register);
+                        Get.to(() => const RegisterPage());
                       },
                       child: Text(
                         'Đăng ký ngay',

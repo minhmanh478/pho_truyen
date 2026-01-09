@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pho_truyen/core/router/app_routes.dart';
 import 'package:pho_truyen/core/utils/app_actions.dart';
 import 'package:pho_truyen/core/constants/app_color.dart';
 import 'package:pho_truyen/features/auth/presentation/controllers/auth_binding.dart';
@@ -108,7 +107,8 @@ class _AccountPageState extends State<AccountPage> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () => Get.toNamed(AppRoutes.login),
+                    onPressed: () =>
+                        Get.to(() => const LoginPage(), binding: AuthBinding()),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       padding: const EdgeInsets.symmetric(vertical: 16),
