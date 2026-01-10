@@ -10,22 +10,55 @@
 
 ## ✨ Tính năng chính
 
-- 📖 **Đọc truyện đa nền tảng:** Hỗ trợ tốt trên cả Android và iOS.
-- 🌓 **Chế độ đọc tối ưu:** Tùy chỉnh Dark/Light mode, font chữ, kích thước và lề.
-- 📥 **Đọc Offline:** Tải và lưu trữ chương truyện vào bộ nhớ cục bộ.
-- 💳 **Thanh toán:** Tích hợp hệ thống nạp tiền và mua chương truyện (Payment Gateway).
-- 🔔 **Thông báo:** Cập nhật chương mới tức thì qua hệ thống Push Notification.
-- 🔍 **Tìm kiếm thông minh:** Tìm kiếm truyện theo tên, tác giả hoặc thể loại.
+- 🔐 **Xác thực & Bảo mật:**
+  - Đăng nhập/Đăng ký tài khoản (Email/Password).
+  - Đăng nhập nhanh qua **Google** và **Facebook**.
+  - Tự động làm mới phiên đăng nhập (Refresh Token).
+
+- 📖 **Trải nghiệm đọc ưu việt:**
+  - Hỗ trợ cuộn dọc, lật trang mượt mà.
+  - Tùy chỉnh giao diện: Dark/Light settings, cỡ chữ, font chữ.
+  - Tự động lưu lịch sử đọc.
+
+- ✍️ **Dành cho Tác giả (Author Center):**
+  - Đăng tải truyện mới với đầy đủ thông tin (Tags, Thể loại, Lịch ra chương).
+  - Quản lý chương truyện (Thêm/Sửa/Xóa).
+  - Thống kê lượt xem, theo dõi.
+
+- 💬 **Tương tác & Cộng đồng:**
+  - Bình luận, trả lời bình luận (Reply), thả tim.
+  - Đánh giá truyện.
+  - Nhận thông báo khi có chương mới hoặc tương tác.
+
+- 💰 **Hệ thống thanh toán & Ví:**
+  - Nạp Ruby qua cổng thanh toán.
+  - Mua chương VIP, mở khóa nội dung.
+  - Xem lịch sử giao dịch.
+
+- 📚 **Thư viện cá nhân:**
+  - Tủ sách yêu thích.
+  - Đánh dấu truyện đang theo dõi.
 
 ---
 
 ## 🛠️ Công nghệ sử dụng (Tech Stack)
 
-- **State Management:** `flutter_bloc` (hoặc Provider/GetX tùy bạn đang dùng).
-- **Navigation:** `go_router` hoặc `auto_route`.
-- **Local Storage:** `hive` hoặc `sqflite` để lưu cache và truyện offline.
-- **Networking:** `dio` để thực hiện các yêu cầu API.
-- **Dependency Injection:** `get_it` & `injectable`.
+Dự án sử dụng các thư viện và công nghệ hiện đại nhất trong hệ sinh thái Flutter:
+
+- **Core:** Flutter 3.x (Dart)
+- **State Management & Routing:** [GetX](https://pub.dev/packages/get) (Quản lý trạng thái, Dependency Injection, Navigation)
+- **UI Components:**
+  - [Shadcn UI](https://pub.dev/packages/shadcn_ui) & [Forui](https://pub.dev/packages/forui) (Thiết kế hiện đại, tinh tế)
+  - `flutter_widget_from_html` (Render nội dung HTML)
+- **Networking:** [Dio](https://pub.dev/packages/dio) (REST API Client với Interceptors xử lý Token)
+- **Local Storage:** `shared_preferences` (Lưu cấu hình, token)
+- **Firebase Services:**
+  - Firebase Messaging (Push Notification)
+  - Firebase Core
+- **Authentication:**
+  - `google_sign_in`
+  - `flutter_facebook_auth`
+- **Utilities:** `intl` (Định dạng dữ liệu), `url_launcher`, `image_picker`.
 
 ---
 
