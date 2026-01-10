@@ -68,8 +68,22 @@ Dự án được triển khai theo mô hình **Clean Architecture** để tách
 
 ```text
 lib/
-├── core/               # Các hằng số, theme, utils và lỗi hệ thống
-├── data/               # Triển khai Repository, Data Sources (Local/Remote) và Models (DTO)
-├── domain/             # Chứa Entities, Business Logic (Use Cases) và Interfaces
-├── presentation/       # Giao diện người dùng (Screens, Widgets) và GetX
-└── main.dart           # File khởi chạy ứng dụng
+├── core/                # Tầng lõi: Chứa các cấu hình và tài nguyên dùng chung
+│   ├── constants/       # Các hằng số (Colors, Styles, Strings)
+│   ├── error/           # Xử lý ngoại lệ và định nghĩa lỗi (Failures)
+│   ├── network/         # Cấu hình kết nối API, HttpClient (Dio)
+│   ├── router/          # Quản lý điều hướng ứng dụng (GoRouter/AutoRoute)
+│   ├── services/        # Các dịch vụ hệ thống (Firebase, Local Service)
+│   ├── usecase/         # Lớp cơ sở cho các nghiệp vụ (Base UseCase)
+│   └── widgets/         # Các Widget dùng chung mức độ hệ thống
+├── features/            # Tầng tính năng: Chia theo nghiệp vụ (Feature-Driven)
+│   ├── auth/            # Quản lý đăng nhập, đăng ký
+│   ├── story/           # Hiển thị thông tin truyện và danh sách
+│   ├── chapter/         # Trình đọc truyện và xử lý nội dung chương
+│   ├── home/            # Giao diện chính và luồng dữ liệu trang chủ
+│   └── ...              # Các module khác (search, comment, notification...)
+├── shared/              # Các thành phần UI dùng chung giữa các features
+│   └── widgets/         # Custom components (Button, Dialog, ItemHashtags...)
+├── app.dart             # Cấu hình Root Widget (MaterialApp)
+├── firebase_options.dart # Cấu hình kết nối Firebase
+└── main.dart            # Điểm khởi chạy ứng dụng (Entry point)
