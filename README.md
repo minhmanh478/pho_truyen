@@ -8,9 +8,17 @@
 
 ---
 
-  Demo IOS: https://youtu.be/KOa32vpljUU
-  Build APK: https://byvn.net/jeUJ
-  Accout Test(có Ruby sẵn): email:leminhmanh2004@gmail.com - mật khẩu: 123456
+## 📱 Thông tin Thử nghiệm Dự án
+Video Demo iOS: https://youtu.be/KOa32vpljUU
+
+Build APK: https://byvn.net/jeUJ
+
+Tài khoản Test (Đã có sẵn Ruby):
+Email: leminhmanh2004@gmail.com
+Mật khẩu: 123456
+
+---
+
 ## ✨ Tính năng chính
 
 - 🔐 **Xác thực & Bảo mật:**
