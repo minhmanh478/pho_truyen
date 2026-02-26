@@ -5,7 +5,9 @@
 [![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-green?style=for-the-badge)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 **Phố Truyện** là một ứng dụng đọc truyện (comics & novels) mã nguồn mở được xây dựng trên nền tảng **Flutter**. Dự án tập trung vào hiệu năng mượt mà, trải nghiệm người dùng tối ưu và cấu trúc code chuẩn mực để dễ dàng mở rộng.
-
+Demo IOS: https://youtu.be/KOa32vpljUU
+Build APK: https://byvn.net/jeUJ
+Accout Test(có Ruby sẵn): email:leminhmanh2004@gmail.com - mật khẩu: 123456
 ---
 
 ## ✨ Tính năng chính
